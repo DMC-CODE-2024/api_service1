@@ -9,7 +9,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="countries_Phone_code")
+@Table(name="countries_phone_code")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CountryCodeModel {
 

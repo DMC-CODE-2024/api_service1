@@ -81,15 +81,11 @@ public class AlertDbService {
             uPSB.with(new SearchCriteria("alertId", filterRequest.getAlertId(), SearchOperation.EQUALITY, Datatype.STRING));
 
 
-        if (filterRequest.getFeature() == null) {
-
-        } else {/*(Objects.nonNull(filterRequest.getFeature()))*/
+        if (Objects.nonNull(filterRequest.getFeature())) {
             uPSB.with(new SearchCriteria("feature", filterRequest.getFeature(), SearchOperation.EQUALITY, Datatype.STRING));
         }
 
-        if (filterRequest.getDescription() == null) {
-
-        } else {/*(Objects.nonNull(filterRequest.getFeature()))*/
+        if (Objects.nonNull(filterRequest.getDescription())) {
             log.info("Description Recieved =" + filterRequest.getFeature());
             uPSB.with(new SearchCriteria("description", filterRequest.getDescription(), SearchOperation.LIKE, Datatype.STRING));
         }
@@ -287,8 +283,8 @@ public class AlertDbService {
 
     public ResponseEntity<?> getAlertData() {
         try {
-            List<AlertDb> alertDb = alertDbRepo.findAll();
-            alertDb.sort((f1, f2) -> f1.getAlertId().compareTo(f2.getAlertId()));
+            List<String> alertDb = alertDbRepo.findDistinctAlertId();
+
             return new ResponseEntity<>(alertDb, HttpStatus.OK);
         } catch (Exception e) {
             log.info("exception occurs");

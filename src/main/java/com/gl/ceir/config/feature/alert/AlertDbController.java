@@ -33,7 +33,6 @@ public class AlertDbController {
             mapping = new MappingJacksonValue(alertDbReponse);
 
         } else {
-            //hh
             log.info(" export block: ");
             FileDetails fileDetails = alertDbService.getAlertDbInFile(filterRequest, source);
             mapping = new MappingJacksonValue(fileDetails);
@@ -42,9 +41,9 @@ public class AlertDbController {
     }
 
     //@ApiOperation(value = "alert ids data", response = HttpResponse.class)
-    @CrossOrigin
+
     @PostMapping("/view")
-    public ResponseEntity<?> getUsertypes(@RequestHeader HttpHeaders headers) {
+    public ResponseEntity<?> getUsertypes() {
         return alertDbService.getAlertData();
     }
 

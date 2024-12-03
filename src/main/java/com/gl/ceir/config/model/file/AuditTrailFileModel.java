@@ -21,34 +21,26 @@ public class AuditTrailFileModel {
 	@CsvBindByName(column = "User Name")
 	@CsvBindByPosition(position = 2)
 	private String userName;
-	
-	@CsvBindByName(column = "User Type")
-	@CsvBindByPosition(position = 3)
-	private String userType;
 
-	@CsvBindByName(column = "Role Type")
-	@CsvBindByPosition(position = 4)
-	private String roleType;
-	
 	/*
 	 * @CsvBindByName(column = "Role Type")
 	 * 
 	 * @CsvBindByPosition(position = 4) private String roleType;
 	 */
 	@CsvBindByName(column = "Feature")
-	@CsvBindByPosition(position = 5)
+	@CsvBindByPosition(position = 3)
 	private String featureName;
 	
 	@CsvBindByName(column = "Sub Feature")
-	@CsvBindByPosition(position = 6)
+	@CsvBindByPosition(position = 4)
 	private String subFeatureName;
 	
 	@CsvBindByName(column = "Public IP")
-	@CsvBindByPosition(position = 7)
+	@CsvBindByPosition(position = 5)
 	private String publicIP;
 	
 	@CsvBindByName(column = "Browser")
-	@CsvBindByPosition(position = 8)
+	@CsvBindByPosition(position = 6)
 	private String browser;
 
 	public String getCreatedOn() {
@@ -86,13 +78,6 @@ public class AuditTrailFileModel {
 		this.subFeatureName = subFeatureName;
 	}
 
-	public String getUserType() {
-		return userType;
-	}
-
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
 
 	public String getPublicIP() {
 		return publicIP;
@@ -118,13 +103,6 @@ public class AuditTrailFileModel {
 		this.txnId = txnId;
 	}
 
-	public String getRoleType() {
-		return roleType;
-	}
-
-	public void setRoleType(String roleType) {
-		this.roleType = roleType;
-	}
 
 	@Override
 	public String toString() {
@@ -132,8 +110,6 @@ public class AuditTrailFileModel {
 				"createdOn='" + createdOn + '\'' +
 				", txnId='" + txnId + '\'' +
 				", userName='" + userName + '\'' +
-				", userType='" + userType + '\'' +
-				", roleType='" + roleType + '\'' +
 				", featureName='" + featureName + '\'' +
 				", subFeatureName='" + subFeatureName + '\'' +
 				", publicIP='" + publicIP + '\'' +

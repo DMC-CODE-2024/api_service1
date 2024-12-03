@@ -95,7 +95,7 @@ public class RunningAlertDbService {
 
 
         if (Objects.nonNull(filterRequest.getStatus()) && filterRequest.getStatus() != -1)
-            rASB.with(new SearchCriteria("status", filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INTEGER));
+            rASB.with(new SearchCriteria("status", filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INT));
 
         if (Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()) {
             rASB.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));

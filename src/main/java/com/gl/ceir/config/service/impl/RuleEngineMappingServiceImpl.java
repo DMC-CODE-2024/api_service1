@@ -570,13 +570,12 @@ public class RuleEngineMappingServiceImpl {
 			        		   "1".equalsIgnoreCase(filterRequest.getColumnName()) ? "modifiedOn":
 			        			   "2".equalsIgnoreCase(filterRequest.getColumnName()) ? "name":
 			        				   "3".equalsIgnoreCase(filterRequest.getColumnName()) ? "feature":
-			        					   "4".equalsIgnoreCase(filterRequest.getColumnName()) ? "userType":
-			        						   "5".equalsIgnoreCase(filterRequest.getColumnName()) ? "ruleOrder":
-			        							   "6".equalsIgnoreCase(filterRequest.getColumnName()) ? "graceAction":
-			        								   "7".equalsIgnoreCase(filterRequest.getColumnName()) ? "postGraceAction":
-			        									   "8".equalsIgnoreCase(filterRequest.getColumnName()) ? "failedRuleActionGrace":
-			        										   "9".equalsIgnoreCase(filterRequest.getColumnName()) ? "failedRuleActionPostGrace":
-			        											   "10".equalsIgnoreCase(filterRequest.getColumnName()) ? "output"
+			        						   "4".equalsIgnoreCase(filterRequest.getColumnName()) ? "ruleOrder":
+			        							   "5".equalsIgnoreCase(filterRequest.getColumnName()) ? "graceAction":
+			        								   "6".equalsIgnoreCase(filterRequest.getColumnName()) ? "postGraceAction":
+			        									   "7".equalsIgnoreCase(filterRequest.getColumnName()) ? "failedRuleActionGrace":
+			        										   "8".equalsIgnoreCase(filterRequest.getColumnName()) ? "failedRuleActionPostGrace":
+			        											   "9".equalsIgnoreCase(filterRequest.getColumnName()) ? "output"
 								       :"modifiedOn";
 			//Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 			
@@ -634,9 +633,9 @@ Pageable pageable = PageRequest.of(pageNo, pageSize,  Sort.by(direction,orderCol
 		if(Objects.nonNull(filterRequest.getFeatureName()) && !filterRequest.getFeatureName().isEmpty())
 			cmsb.with(new SearchCriteria("feature", filterRequest.getFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
 
-		if(Objects.nonNull(filterRequest.getUserType()) && !filterRequest.getUserType().isEmpty() )
+/*		if(Objects.nonNull(filterRequest.getUserType()) && !filterRequest.getUserType().isEmpty() )
 			cmsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
-		
+		*/
 
 		if(Objects.nonNull(filterRequest.getGraceAction()) && !filterRequest.getGraceAction().isEmpty())
 			cmsb.with(new SearchCriteria("graceAction", filterRequest.getGraceAction(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -722,7 +721,6 @@ Pageable pageable = PageRequest.of(pageNo, pageSize,  Sort.by(direction,orderCol
 					uPFm.setModifiedOn(ruleEngineMapping.getModifiedOn().format(dtf));
 					uPFm.setName(ruleEngineMapping.getName());
 					uPFm.setFeature(ruleEngineMapping.getFeature());
-					uPFm.setUserType(ruleEngineMapping.getUserType());
 					uPFm.setRuleOrder(ruleEngineMapping.getRuleOrder());
 					uPFm.setGraceAction(ruleEngineMapping.getGraceAction());
 					uPFm.setPostGraceAction(ruleEngineMapping.getPostGraceAction());

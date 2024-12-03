@@ -17,26 +17,23 @@ public class RuleEngineMappingFileModel {
 	@CsvBindByName(column = "Feature Name")
 	@CsvBindByPosition(position = 3)
 	private String feature;
-	@CsvBindByName(column = "UserType")
-	@CsvBindByPosition(position = 4)
-	private String userType;
 	@CsvBindByName(column = "Order")
-	@CsvBindByPosition(position = 5)
+	@CsvBindByPosition(position = 4)
 	private Integer ruleOrder;
 	@CsvBindByName(column = "Action in Grace Period")
-	@CsvBindByPosition(position = 6)
+	@CsvBindByPosition(position = 5)
 	private String graceAction;
 	@CsvBindByName(column = "Action in Post Grace Period")
-	@CsvBindByPosition(position = 7)
+	@CsvBindByPosition(position = 6)
 	private String postGraceAction;
 	@CsvBindByName(column = "Move to in Grace Period")
-	@CsvBindByPosition(position = 8)
+	@CsvBindByPosition(position = 7)
 	private String failedRuleActionGrace;
 	@CsvBindByName(column = "Move to Post Grace Period")
-	@CsvBindByPosition(position = 9)
+	@CsvBindByPosition(position = 8)
 	private String failedRuleActionPostGrace;
 	@CsvBindByName(column = "Expected Output")
-	@CsvBindByPosition(position = 10)
+	@CsvBindByPosition(position = 9)
 	private String output;
 
 	public String getCreatedOn() {
@@ -67,7 +64,6 @@ public class RuleEngineMappingFileModel {
 		builder.append(", feature=");
 		builder.append(feature);
 		builder.append(", userType=");
-		builder.append(userType);
 		builder.append(", ruleOrder=");
 		builder.append(ruleOrder);
 		builder.append(", graceAction=");
@@ -98,14 +94,6 @@ public class RuleEngineMappingFileModel {
 
 	public void setFeature(String feature) {
 		this.feature = feature;
-	}
-
-	public String getUserType() {
-		return userType;
-	}
-
-	public void setUserType(String userType) {
-		this.userType = userType;
 	}
 
 	public Integer getRuleOrder() {

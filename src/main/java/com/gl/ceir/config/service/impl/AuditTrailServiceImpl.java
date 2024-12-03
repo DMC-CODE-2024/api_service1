@@ -100,13 +100,10 @@ public class AuditTrailServiceImpl {
 			String orderColumn=null;
 			orderColumn = "0".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
 					: "1".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId"
-							: "2".equalsIgnoreCase(filterRequest.getColumnName()) ? "userName"
-									: "3".equalsIgnoreCase(filterRequest.getColumnName()) ? "userType"
-											: "4".equalsIgnoreCase(filterRequest.getColumnName())? "roleType"
-													:"5".equalsIgnoreCase(filterRequest.getColumnName()) ? "featureName" 
-													    : "6".equalsIgnoreCase(filterRequest.getColumnName()) ? "subFeature"
-													    	: "7".equalsIgnoreCase(filterRequest.getColumnName()) ? "publicIp"
-													    		: "8".equalsIgnoreCase(filterRequest.getColumnName()) ? "browser":"modifiedOn";
+													:"2".equalsIgnoreCase(filterRequest.getColumnName()) ? "featureName"
+													    : "3".equalsIgnoreCase(filterRequest.getColumnName()) ? "subFeature"
+													    	: "4".equalsIgnoreCase(filterRequest.getColumnName()) ? "publicIp"
+													    		: "5".equalsIgnoreCase(filterRequest.getColumnName()) ? "browser":"modifiedOn";
 			
 			Sort.Direction direction;
 			if("modifiedOn".equalsIgnoreCase(orderColumn)) {
@@ -176,11 +173,9 @@ public class AuditTrailServiceImpl {
 					atfm = new AuditTrailFileModel();
 					atfm.setCreatedOn(auditTrail.getCreatedOn().toString());
 					atfm.setTxnId(auditTrail.getTxnId());
-					atfm.setRoleType(auditTrail.getRoleType());
 					atfm.setFeatureName(auditTrail.getFeatureName());
 					atfm.setSubFeatureName(auditTrail.getSubFeature());
 					atfm.setUserName(auditTrail.getUserName());
-					atfm.setUserType(auditTrail.getUserType());
 					atfm.setPublicIP(auditTrail.getPublicIp());
 					atfm.setBrowser(auditTrail.getBrowser());
 					logger.debug(atfm);
@@ -229,17 +224,16 @@ public class AuditTrailServiceImpl {
 		if(Objects.nonNull(filterRequest.getFeatureName()) && !filterRequest.getFeatureName().isEmpty())
 			cmsb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
 
+/*
 		if(Objects.nonNull(filterRequest.getUserType()) && !filterRequest.getUserType().isEmpty())
 			cmsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+*/
 
 		if(Objects.nonNull(filterRequest.getSubFeatureName()) && !filterRequest.getSubFeatureName().isEmpty())
 			cmsb.with(new SearchCriteria("subFeature", filterRequest.getSubFeatureName(), SearchOperation.LIKE, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getUserName()) && !filterRequest.getUserName().isEmpty())
 			cmsb.with(new SearchCriteria("userName", filterRequest.getUserName(), SearchOperation.LIKE, Datatype.STRING));
-		
-		if(Objects.nonNull(filterRequest.getRoleType()) && !filterRequest.getRoleType().isEmpty())
-			cmsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 
 		
 		if(Objects.nonNull(filterRequest.getPublicIp()) && !filterRequest.getPublicIp().isEmpty())
@@ -253,8 +247,6 @@ public class AuditTrailServiceImpl {
 			cmsb.orSearch(new SearchCriteria("userName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			cmsb.orSearch(new SearchCriteria("featureName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			cmsb.orSearch(new SearchCriteria("subFeature", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			cmsb.orSearch(new SearchCriteria("userType", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			cmsb.orSearch(new SearchCriteria("roleType", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
 		return cmsb;
 	}

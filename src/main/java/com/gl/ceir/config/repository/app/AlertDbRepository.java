@@ -17,6 +17,9 @@ public interface AlertDbRepository extends JpaRepository<AlertDb, Long>, JpaSpec
     @Query("SELECT DISTINCT s.feature FROM AlertDb s")
     public List<String> findDistinctFeature();
 
+    @Query("SELECT DISTINCT s.alertId FROM AlertDb s")
+    public List<String> findDistinctAlertId();
+
     public AlertDb findById(long id);
 
 }
