@@ -200,7 +200,7 @@ public class PoliceStolenService {
         eirsResponse=eirsResponseRepo.getByTagAndLanguage("stolen_notification_msg",stolenLostModel.getLanguage());
 
         String message=eirsResponse.getValue().replace("<otp>", OTPsms);
-        NotificationAPI(stolenLostModel.getContactNumberForOtp(),stolenLostModel.getDeviceOwnerNationality(),stolenLostModel.getOtpEmail(),message,stolenLostModel.getRequestId(),eirsResponse.getFeatureName(),stolenLostModel.getLanguage(),eirsResponse.getDescription(),"SMS_OTP");
+        NotificationAPI(stolenLostModel.getContactNumberForOtp(),stolenLostModel.getDeviceOwnerNationality(),stolenLostModel.getOtpEmail(),message,stolenLostModel.getRequestId(),eirsResponse.getFeatureName(),stolenLostModel.getLanguage(),eirsResponse.getDescription(),"SMS_OTP","");
         genricResponse.setRequestID(stolenLostModel.getRequestId());
         genricResponse.setMessage(OTPsms);
         genricResponse.setStatusCode("200");
@@ -235,7 +235,7 @@ public class PoliceStolenService {
         EirsResponse eirsResponse = new EirsResponse();
         eirsResponse=eirsResponseRepo.getByTagAndLanguage("stolen_notification_msg",stolenLostModel.getLanguage());
         String message=eirsResponse.getValue().replace("<otp>", OTPsms);
-        NotificationAPI(stolenLostModel.getContactNumberForOtp(),stolenLostModel.getDeviceOwnerNationality(),stolenLostModel.getOtpEmail(),message,stolenLostModel.getRequestId(),eirsResponse.getFeatureName(),stolenLostModel.getLanguage(),eirsResponse.getDescription(),"SMS_OTP");
+        NotificationAPI(stolenLostModel.getContactNumberForOtp(),stolenLostModel.getDeviceOwnerNationality(),stolenLostModel.getOtpEmail(),message,stolenLostModel.getRequestId(),eirsResponse.getFeatureName(),stolenLostModel.getLanguage(),eirsResponse.getDescription(),"SMS_OTP","");
         genricResponse.setRequestID(stolenLostModel.getRequestId());
         genricResponse.setMessage(OTPsms);
         genricResponse.setStatusCode("200");
@@ -266,7 +266,7 @@ public class PoliceStolenService {
             eirsResponse=eirsResponseRepo.getByTagAndLanguage("stolen_success",res.getLanguage());
             String message=eirsResponse.getValue().replace("<requestId>", res.getRequestId()).replace("<contactNumber>",res.getContactNumberForOtp());
             String subject=eirsResponse.getDescription().replace("<requestId>", res.getRequestId()).replace("<contactNumber>",res.getContactNumberForOtp());
-            NotificationAPI(res.getContactNumberForOtp(),res.getDeviceOwnerNationality(),res.getOtpEmail(),message,res.getRequestId(),eirsResponse.getFeatureName(),res.getLanguage(),subject,"SMS");
+            NotificationAPI(res.getContactNumberForOtp(),res.getDeviceOwnerNationality(),res.getOtpEmail(),message,res.getRequestId(),eirsResponse.getFeatureName(),res.getLanguage(),subject,"SMS",res.getDeviceOwnerEmail());
             if(res.getRequestMode().equalsIgnoreCase("bulk"))
             {
                 WebActionDb webActionDb= new WebActionDb();
@@ -307,7 +307,7 @@ public class PoliceStolenService {
         EirsResponse eirsResponse = new EirsResponse();
         eirsResponse=eirsResponseRepo.getByTagAndLanguage("resend_notification_msg",res.getLanguage());
         String message=eirsResponse.getValue().replace("<otp>", OTPsms);
-        NotificationAPI(res.getContactNumberForOtp(),res.getDeviceOwnerNationality(),res.getOtpEmail(),message,requestID,eirsResponse.getFeatureName(),res.getLanguage(),eirsResponse.getDescription(),"SMS_OTP");// calling notification API
+        NotificationAPI(res.getContactNumberForOtp(),res.getDeviceOwnerNationality(),res.getOtpEmail(),message,requestID,eirsResponse.getFeatureName(),res.getLanguage(),eirsResponse.getDescription(),"SMS_OTP","");// calling notification API
         genricResponse.setStatusCode("200");
         genricResponse.setMessage("Resend OTP is successful");
         return genricResponse;
@@ -429,7 +429,7 @@ public class PoliceStolenService {
         lostStolenRepo.save(stolenLostModel);
     }
 
-    public void NotificationAPI(String msisdn ,  String nationality, String emailOTP,String msg,String requestId,String featureName,String lang,String subject,String channel) {
+    public void NotificationAPI(String msisdn ,  String nationality, String emailOTP,String msg,String requestId,String featureName,String lang,String subject,String channel,String email) {
         NotificationModel notificationModel = new NotificationModel();
         GenricResponse genricResponse = new GenricResponse();
         notificationModel.setMessage(msg);
@@ -444,7 +444,7 @@ public class PoliceStolenService {
             genricResponse = notificationFeign.addNotifications(notificationModel);
             if(!channel.contains("OTP")){
                 notificationModel.setChannelType("EMAIL");
-                notificationModel.setEmail(emailOTP);
+                notificationModel.setEmail(email);
                 notificationModel.setSubject(subject);
                 logger.info("request send to email notification API=" + notificationModel);
                 genricResponse = notificationFeign.addNotifications(notificationModel);

@@ -507,7 +507,7 @@ public class DatabaseTablesRepository {
         try {
             logger.info("inside try block=");
             if (propertiesReader.dialect.toLowerCase().contains("mysql"))
-                query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS where table_name='" + tableName + "' and table_schema='" + dbName + "'";
+                query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS where table_name='" + tableName + "' and table_schema='" + dbName + "' ORDER BY ORDINAL_POSITION";
             else
                 query = "SELECT COLUMN_NAME from user_tab_columns where LOWER(table_name)=LOWER('" + tableName + "') order by column_id";
             logger.info("qurey for fetch tables column " + query);

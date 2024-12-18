@@ -47,7 +47,7 @@ public interface LostStolenRepo extends JpaRepository<StolenLostModel, Long>, Jp
 		public void updateByRequestId(String requestId,String requestType);
 	
 	
-	@Query(value="select DISTRICT from district_db  where ID=:id", nativeQuery = true)
+	@Query(value="select DISTRICT from districts_db  where ID=:id", nativeQuery = true)
 	public String getDistrict(String id );
 	
 	@Query(value="select COMMUNE from commune_db where ID=:id", nativeQuery = true)

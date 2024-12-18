@@ -78,7 +78,7 @@ public class DatabaseTablesServiceImpl {
     public TableDataPageable getTableDataV3(TableFilterRequest filterRequest, int pageNumber, int pageSize) {
         ReportDb reportDb = null;
         try {
-            reportDb = reportDbRepository.findByReportName(filterRequest.getTableName());
+           // reportDb = reportDbRepository.findByReportName(filterRequest.getTableName());
             User user = userRepository.getById(filterRequest.getUserId());
             AuditTrail auditTrail = new AuditTrail();
             auditTrail.setFeatureName("DB Tables");
@@ -300,7 +300,7 @@ public class DatabaseTablesServiceImpl {
             auditTrail.setPublicIp(filterRequest.getPublicIp());
             auditTrail.setBrowser(filterRequest.getBrowser());
             auditTrailRepository.save(auditTrail);
-            reportDb = reportDbRepository.findByReportName(filterRequest.getTableName());
+          // reportDb = reportDbRepository.findByReportName(filterRequest.getTableName());
             pageSize = Integer.valueOf(systemConfigurationDbRepository.getByTag("file.max-file-record").getValue());
             tableDataPageable = databaseTablesRepository.getTableDataV3(filterRequest, reportDb, pageNumber, pageSize);
             if (Objects.nonNull(tableDataPageable.getContent())) {

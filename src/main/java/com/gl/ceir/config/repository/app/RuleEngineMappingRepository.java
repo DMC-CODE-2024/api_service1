@@ -29,6 +29,6 @@ JpaSpecificationExecutor<RuleEngineMapping> {
 	// public List<RuleEngineMapping> findDistinctFeatureByName(String name);
 	 public List<RuleEngineMapping> findByFeature(String  featureName);
 	 public List<RuleEngineMapping> findByFeatureAndName(String  featureName,String name);
-	 @Query(value = "SELECT * FROM rule_engine_mapping r where r.name =?1", nativeQuery = true)
+	 @Query(value = "SELECT * FROM feature_rule r where r.name =?1", nativeQuery = true)
 	 public List<RuleEngineMapping> findDistinctByName(String name);
 }
