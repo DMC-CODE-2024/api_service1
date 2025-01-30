@@ -23,7 +23,7 @@ public class TypeApprovedDb {
 	private String country;
 
 	//@Type(type="date")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	private Date requestDate;
 	
 	private String tac;
@@ -39,22 +39,22 @@ public class TypeApprovedDb {
 	
 	
 	//@Type(type="date")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	private Date approveDisapproveDate;
 	
 	private String remark;
 	private String adminRemark;
 	private String fileName;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
 	@CreationTimestamp
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
 	@Column(nullable = false, updatable = false)
 	private Date createdOn;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
 	@UpdateTimestamp
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
 	private Date modifiedOn;
 	
 	private String txnId;

@@ -78,7 +78,7 @@ public class AddressListManagementUDService {
             Optional<DistrictEntity> byProvinceAndDistrict = Optional.empty();
             Optional<CommuneEntity> byCommune = Optional.empty();
             if (byId.isPresent()) {
-                Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))).create();
+                Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))).create();
                 AddressEntity result = gson.fromJson(gson.toJson(byId.get()), AddressEntity.class);
 
                 if (Objects.nonNull(result.getProvince()) && Objects.nonNull(result.getDistrict())) {
@@ -140,7 +140,7 @@ public class AddressListManagementUDService {
         Optional<ProvinceDb> byProvince = Optional.empty();
         Optional<CommuneDb> byCommune = Optional.empty();
         if (byId.isPresent()) {
-  /*      Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))).create();
+  /*      Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))).create();
         AddressEntity result = gson.fromJson(gson.toJson(byId.get()), AddressEntity.class);
 */
             ObjectMapper objectMapper = new ObjectMapper();

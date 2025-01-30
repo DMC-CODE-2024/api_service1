@@ -18,11 +18,11 @@ public class CountryCodeModel {
     private Long id;
 
     @CreationTimestamp
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
     private LocalDateTime createdOn;
 
     @UpdateTimestamp
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="dd-MM-yyyy HH:mm")
     private LocalDateTime modifiedOn;
 
     @Column(name = "phone_code")

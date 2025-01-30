@@ -322,7 +322,7 @@ public class SystemConfigListServiceImpl {
 		SystemConfigListFileModel uPFm = null;
 		SystemConfigurationDb dowlonadDir = systemConfigurationDbRepository.getByTag("file.download-dir");
 		SystemConfigurationDb dowlonadLink = systemConfigurationDbRepository.getByTag("file.download-link");
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 		Integer pageNo = 0;
 		Integer pageSize = Integer.valueOf(systemConfigurationDbRepository.getByTag("file.max-file-record").getValue());
 		String filePath = dowlonadDir.getValue();
@@ -391,7 +391,7 @@ public class SystemConfigListServiceImpl {
 		 * String fileName = null; Writer writer = null; SystemConfigListFileModel
 		 * fileModel = null;
 		 * 
-		 * DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		 * DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 		 * DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 		 * 
 		 * SystemConfigurationDb filepath =

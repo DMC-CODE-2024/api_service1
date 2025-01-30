@@ -252,7 +252,7 @@ public class RuleEngineServiceImpl {
 		RuleEngineFileModel uPFm = null;
 		SystemConfigurationDb dowlonadDir=systemConfigurationDbRepository.getByTag("file.download-dir");
 		SystemConfigurationDb dowlonadLink=systemConfigurationDbRepository.getByTag("file.download-link");
-		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 		Integer pageNo = 0;
 		Integer pageSize = Integer.valueOf(systemConfigurationDbRepository.getByTag("file.max-file-record").getValue());
 		String filePath  = dowlonadDir.getValue();

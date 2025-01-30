@@ -25,11 +25,11 @@ public class DashboardConfDb implements Serializable{
 	private Long id;
 
 	@CreationTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm")
 	private LocalDateTime createdOn;
 
 	@UpdateTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm")
 	private LocalDateTime modifiedOn;
 	
 	@NonNull

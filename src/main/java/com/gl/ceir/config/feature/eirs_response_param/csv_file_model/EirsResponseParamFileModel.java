@@ -29,7 +29,7 @@ public class EirsResponseParamFileModel {
 //    private Integer type;
 
     @CsvBindByName(column = "Value")
-    @CsvBindByPosition(position = 2)
+    @CsvBindByPosition(position = 3)
     private String value;
 
 //    @CsvBindByName(column = "Active")
@@ -37,12 +37,12 @@ public class EirsResponseParamFileModel {
 //    private Integer active;
 
     @CsvBindByName(column = "Feature Name")
-    @CsvBindByPosition(position = 3)
+    @CsvBindByPosition(position = 4)
     private String featureName;
 //
-//    @CsvBindByName(column = "Remarks")
+//    @CsvBindByName(column = "Remark")
 //    @CsvBindByPosition(position = 9)
-//    private String remarks;
+//    private String remark;
 //
 //    @CsvBindByName(column = "User Type")
 //    @CsvBindByPosition(position = 10)
@@ -53,8 +53,12 @@ public class EirsResponseParamFileModel {
 //    private String modifiedBy;
 
     @CsvBindByName(column = "Language")
-    @CsvBindByPosition(position =4)
+    @CsvBindByPosition(position =5)
     private String language;
+
+    @CsvBindByName(column = "Subject")
+    @CsvBindByPosition(position = 2)
+    private String subject;
 
     // Getters and Setters
 
@@ -139,12 +143,12 @@ public class EirsResponseParamFileModel {
         return this;
     }
 
-//    public String getRemarks() {
-//        return remarks;
+//    public String getRemark() {
+//        return remark;
 //    }
 //
-//    public EirsResponseParamFileModel setRemarks(String remarks) {
-//        this.remarks = remarks;
+//    public EirsResponseParamFileModel setRemark(String remark) {
+//        this.remark = remark;
 //        return this;
 //    }
 //
@@ -172,6 +176,15 @@ public class EirsResponseParamFileModel {
 
     public EirsResponseParamFileModel setLanguage(String language) {
         this.language = language;
+        return this;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public EirsResponseParamFileModel setSubject(String subject) {
+        this.subject = subject;
         return this;
     }
 }

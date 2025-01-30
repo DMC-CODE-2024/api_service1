@@ -25,7 +25,7 @@ public class GreylistDbHistory implements Serializable {
 	
 	@JsonIgnore
 	@CreationTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm")
 	private Date createdOn;
 	@JsonIgnore
 	@UpdateTimestamp

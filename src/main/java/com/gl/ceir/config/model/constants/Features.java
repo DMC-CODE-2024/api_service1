@@ -51,4 +51,5 @@ public interface Features {
     String BLOCK_TAC = "Blocked TAC List";
     String STOLEN_BULK = "Bulk Stolen";
     String STOLEN_STATUS = "Stolen Status";
+    String BULK_IMEI = "Bulk Check IMEI";
 }

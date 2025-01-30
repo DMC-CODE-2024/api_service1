@@ -25,7 +25,7 @@ public class BlockedTacModel {
 	private Long sno;
 
 	@CreationTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm")
 	private LocalDateTime creationDate;
 	
 	@Column(name = "tac") 

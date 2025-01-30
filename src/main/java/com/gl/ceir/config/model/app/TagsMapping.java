@@ -21,10 +21,10 @@ public class TagsMapping  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm")
 	private Date createdOn;
 	
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm")
 	private Date updatedOn;
 	
 	@NotNull

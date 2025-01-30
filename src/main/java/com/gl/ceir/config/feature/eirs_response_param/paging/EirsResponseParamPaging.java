@@ -74,8 +74,9 @@ public class EirsResponseParamPaging {
             map.put("Value", "value");
             map.put("Active", "active");
             map.put("Feature Name", "featureName");
-            map.put("Remarks", "remarks");
+            map.put("Remark", "remark");
             map.put("Language", "language");
+            map.put("Subject", "subject");
         }
         return map.get(columnName);
     }
@@ -95,8 +96,9 @@ public class EirsResponseParamPaging {
         cmsb.with(new SearchCriteria("value", eirsResponse.getValue(), SearchOperation.LIKE, Datatype.STRING));
         cmsb.with(new SearchCriteria("active", eirsResponse.getActive(), SearchOperation.EQUALITY, Datatype.INT));
         cmsb.with(new SearchCriteria("featureName", eirsResponse.getFeatureName(), SearchOperation.LIKE, Datatype.STRING));
-        cmsb.with(new SearchCriteria("remarks", eirsResponse.getRemarks(), SearchOperation.LIKE, Datatype.STRING));
+        cmsb.with(new SearchCriteria("remark", eirsResponse.getRemarks(), SearchOperation.LIKE, Datatype.STRING));
         cmsb.with(new SearchCriteria("language", eirsResponse.getLanguage(), SearchOperation.LIKE, Datatype.STRING));
+        cmsb.with(new SearchCriteria("subject", eirsResponse.getSubject(), SearchOperation.LIKE, Datatype.STRING));
         return cmsb;
     }
 }

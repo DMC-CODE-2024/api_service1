@@ -24,6 +24,10 @@ public class PropertiesReader {
     @Value("${groupId}")
     public Long groupId;
 
+    @Value("${stolenFeatureName}")
+    public String stolenFeatureName;
+
+
 /*    @Value("${serverName}")
     public String serverName;
 

@@ -188,6 +188,7 @@ public class LostStolenController {
 			ss=systemConfigurationDbRepository.getByTag("upload_file_link");
 
 			if(res!=null) {
+				res.setDevicePurchaseInvoiceUrl(res.getFirCopyUrl());
 				res.setFirCopyUrl(ss.getValue().replace("$LOCAL_IP",propertiesReader.localIp));
 				try {
 					String dist = lostStolenRepo.getDistrict(res.getDistrict());

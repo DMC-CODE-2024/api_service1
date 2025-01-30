@@ -8,11 +8,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class TypeApproveFilter {
 	//@Type(type="date")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	public LocalDate  startDate;
 	
 	//@Type(type="date")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	public LocalDate   endDate;
 	
 	private Integer  status;

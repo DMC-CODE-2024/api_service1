@@ -37,15 +37,15 @@ public class StateMgmtDb implements Serializable {
 	 * @UpdateTimestamp private LocalDateTime modifiedOn;
 	 */
 	@Column(nullable =false)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
 	@CreationTimestamp
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
 	private LocalDateTime createdOn;
 
 	@Column(nullable =false)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
 	@UpdateTimestamp
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
 	private LocalDateTime modifiedOn;
 	
 	@NotNull

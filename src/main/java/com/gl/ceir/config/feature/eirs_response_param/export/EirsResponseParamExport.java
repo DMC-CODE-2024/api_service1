@@ -49,7 +49,7 @@ public class EirsResponseParamExport {
 
         EirsResponseParamFileModel fileModel = null;
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
         SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
@@ -82,10 +82,11 @@ public class EirsResponseParamExport {
                     fileModel.setValue(data.getValue());
                     // fileModel.setActive(data.getActive());
                     fileModel.setFeatureName(data.getFeatureName());
-                    // fileModel.setRemarks(data.getRemarks());
+//                     fileModel.setRemark(data.getRemark());
                     // fileModel.setUserType(data.getUserType());
                     // fileModel.setModifiedBy(data.getModifiedBy());
                     fileModel.setLanguage(data.getLanguage());
+                    fileModel.setSubject(data.getSubject());
 
                     fileRecords.add(fileModel);
                 }

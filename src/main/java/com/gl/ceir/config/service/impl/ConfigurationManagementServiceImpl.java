@@ -612,6 +612,10 @@ ConfigurationManagementServiceImpl.class);
 				
 			Page<SystemConfigurationDb> page = systemConfigurationDbRepository
 					.findAll(buildSpecification_system(filterRequest).build(), pageable);
+			for (SystemConfigurationDb systemConfigurationDb : page.getContent()) {
+				systemConfigurationDb
+						.setTypeInterp(interpSetter.setConfigInterp(Tags.CONFIG_TYPE, systemConfigurationDb.getType()));
+			}
 			return page;
 
 		} catch (Exception e) {
@@ -630,7 +634,7 @@ ConfigurationManagementServiceImpl.class);
 
 		SystemMgtFileModel fileModel = null;
 
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 		DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
 		SystemConfigurationDb filepath = this.findByTag(ConfigTags.file_download_dir);
@@ -711,7 +715,7 @@ ConfigurationManagementServiceImpl.class);
 
 		MessageMgtFileModel fileModel = null;
 
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 		DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
 		SystemConfigurationDb filepath = this.findByTag(ConfigTags.file_download_dir);

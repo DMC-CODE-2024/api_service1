@@ -33,7 +33,7 @@ public class ChecKIMEIContent {
 	private Long id;
 
 	@CreationTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm")
 	private LocalDateTime createdOn;
 
 	@Column(length = 30)

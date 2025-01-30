@@ -29,11 +29,11 @@ public class LostStolenMgmt {
 	private Long id;
 	
 	@CreationTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm")
 	private LocalDateTime createdOn;
 	
 	@UpdateTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm")
 	private LocalDateTime modified_on;
 	
 	@Column(name = "imei") 

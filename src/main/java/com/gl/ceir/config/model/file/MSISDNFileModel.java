@@ -28,9 +28,9 @@ public class MSISDNFileModel {
     @CsvBindByPosition(position = 5)
     private long seriesStart;
 
-    @CsvBindByName(column = "Series End")
+   /* @CsvBindByName(column = "Series End")
     @CsvBindByPosition(position = 6)
-    private long seriesEnd;
+    private long seriesEnd;*/
 
     public long getSeriesStart() {
         return seriesStart;
@@ -41,14 +41,14 @@ public class MSISDNFileModel {
         return this;
     }
 
-    public long getSeriesEnd() {
+    /*public long getSeriesEnd() {
         return seriesEnd;
     }
 
     public MSISDNFileModel setSeriesEnd(long seriesEnd) {
         this.seriesEnd = seriesEnd;
         return this;
-    }
+    }*/
 
     public String getCreatedOn() {
         return createdOn;

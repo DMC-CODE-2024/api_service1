@@ -218,13 +218,13 @@ public class DatabaseTablesRepository {
                 if (propertiesReader.dialect.toLowerCase().contains("mysql"))
                     where = where + " DATE(created_on) >= DATE('" + filterRequest.getStartDate() + "') and";
                 else
-                    where = where + " to_char(created_on,'YYYY-MM-DD') >= '" + filterRequest.getStartDate() + "' and";
+                    where = where + " to_char(created_on,'dd-MM-yyyy HH:mm') >= '" + filterRequest.getStartDate() + "' and";
             }
             if (Objects.nonNull(filterRequest.getEndDate())) {
                 if (propertiesReader.dialect.toLowerCase().contains("mysql"))
                     where = where + " DATE(created_on) <= DATE('" + filterRequest.getEndDate() + "') and";
                 else
-                    where = where + " to_char(created_on,'YYYY-MM-DD') <= '" + filterRequest.getStartDate() + "' and";
+                    where = where + " to_char(created_on,'dd-MM-yyyy HH:mm') <= '" + filterRequest.getStartDate() + "' and";
             }
             if (Objects.nonNull(filterRequest.getTxnId()) && Objects.nonNull(reportDb.getTxnIdField())) {
                 where = where + " " + reportDb.getTxnIdField() + "='" + filterRequest.getTxnId() + "' and";
@@ -429,13 +429,13 @@ public class DatabaseTablesRepository {
                 if (propertiesReader.dialect.toLowerCase().contains("mysql"))
                     where = where + " DATE(created_on) >= DATE('" + filterRequest.getStartDate() + "') and";
                 else
-                    where = where + " to_char(created_on,'YYYY-MM-DD') >= '" + filterRequest.getStartDate() + "' and";
+                    where = where + " to_char(created_on,'dd-MM-yyyy HH:mm') >= '" + filterRequest.getStartDate() + "' and";
             }
             if (Objects.nonNull(filterRequest.getEndDate())) {
                 if (propertiesReader.dialect.toLowerCase().contains("mysql"))
                     where = where + " DATE(created_on) <= DATE('" + filterRequest.getEndDate() + "') and";
                 else
-                    where = where + " to_char(created_on,'YYYY-MM-DD') <= '" + filterRequest.getStartDate() + "' and";
+                    where = where + " to_char(created_on,'dd-MM-yyyy HH:mm') <= '" + filterRequest.getStartDate() + "' and";
             }
 
             if (!where.equals("where")) {
@@ -660,13 +660,13 @@ public class DatabaseTablesRepository {
                 if (propertiesReader.dialect.toLowerCase().contains("mysql"))
                     where = where + " DATE(created_on) >= DATE('" + filterRequest.getStartDate() + "') and";
                 else
-                    where = where + " to_char(created_on,'YYYY-MM-DD') >= '" + filterRequest.getStartDate() + "' and";
+                    where = where + " to_char(created_on,'dd-MM-yyyy HH:mm') >= '" + filterRequest.getStartDate() + "' and";
             }
             if (Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().equals("")) {
                 if (propertiesReader.dialect.toLowerCase().contains("mysql"))
                     where = where + " DATE(created_on) <= DATE('" + filterRequest.getEndDate() + "') and";
                 else
-                    where = where + " to_char(created_on,'YYYY-MM-DD') <= '" + filterRequest.getEndDate() + "' and";
+                    where = where + " to_char(created_on,'dd-MM-yyyy HH:mm') <= '" + filterRequest.getEndDate() + "' and";
             }
             if (Objects.nonNull(filterRequest.getTxnId()) && Objects.nonNull(reportDb.getTxnIdField())) {
                 where = where + " " + reportDb.getTxnIdField() + "='" + filterRequest.getTxnId() + "' and";
@@ -856,13 +856,13 @@ public class DatabaseTablesRepository {
 //                if (propertiesReader.dialect.toLowerCase().contains("mysql"))
 //                    where = where + " DATE(created_on) >= DATE('" + filterRequest.getStartDate() + "') and";
 //                else
-//                    where = where + " to_char(created_on,'YYYY-MM-DD') >= '" + filterRequest.getStartDate() + "' and";
+//                    where = where + " to_char(created_on,'dd-MM-yyyy HH:mm') >= '" + filterRequest.getStartDate() + "' and";
 //            }
 //            if (Objects.nonNull(filterRequest.getEndDate())) {
 //                if (propertiesReader.dialect.toLowerCase().contains("mysql"))
 //                    where = where + " DATE(created_on) <= DATE('" + filterRequest.getEndDate() + "') and";
 //                else
-//                    where = where + " to_char(created_on,'YYYY-MM-DD') <= '" + filterRequest.getStartDate() + "' and";
+//                    where = where + " to_char(created_on,'dd-MM-yyyy HH:mm') <= '" + filterRequest.getStartDate() + "' and";
 //            }
 //            if (Objects.nonNull(filterRequest.getTxnId()) && Objects.nonNull(reportDb.getTxnIdField())) {
 //                where = where + " " + reportDb.getTxnIdField() + "='" + filterRequest.getTxnId() + "' and";
@@ -1054,11 +1054,11 @@ public class DatabaseTablesRepository {
 //                    where = where + " DATE(created_on) >= DATE('" + filterRequest.getStartDate() + "') and";
 //                else {
 //                    if (Objects.nonNull(reportTrend) && reportTrend.equalsIgnoreCase("monthly"))
-//                        where = where + " to_char(to_date(created_on,'MON YYYY'),'YYYY-MM-DD') >= '" + filterRequest.getStartDate() + "' and";
+//                        where = where + " to_char(to_date(created_on,'MON YYYY'),'dd-MM-yyyy HH:mm') >= '" + filterRequest.getStartDate() + "' and";
 //                    else if (Objects.nonNull(reportTrend) && reportTrend.equalsIgnoreCase("yearly"))
-//                        where = where + " to_char(to_date(created_on,'YYYY'),'YYYY-MM-DD') >= '" + filterRequest.getStartDate() + "' and";
+//                        where = where + " to_char(to_date(created_on,'YYYY'),'dd-MM-yyyy HH:mm') >= '" + filterRequest.getStartDate() + "' and";
 //                    else
-//                        where = where + " to_char(created_on,'YYYY-MM-DD') >= '" + filterRequest.getStartDate() + "' and";
+//                        where = where + " to_char(created_on,'dd-MM-yyyy HH:mm') >= '" + filterRequest.getStartDate() + "' and";
 //                }
 //            }
 //            if (Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().equals("")) {
@@ -1066,11 +1066,11 @@ public class DatabaseTablesRepository {
 //                    where = where + " DATE(created_on) <= DATE('" + filterRequest.getEndDate() + "') and";
 //                else {
 //                    if (Objects.nonNull(reportTrend) && reportTrend.equalsIgnoreCase("monthly"))
-//                        where = where + " to_char(to_date(created_on,'MON YYYY'),'YYYY-MM-DD') <= '" + filterRequest.getEndDate() + "' and";
+//                        where = where + " to_char(to_date(created_on,'MON YYYY'),'dd-MM-yyyy HH:mm') <= '" + filterRequest.getEndDate() + "' and";
 //                    else if (Objects.nonNull(reportTrend) && reportTrend.equalsIgnoreCase("yearly"))
-//                        where = where + " to_char(to_date(created_on,'YYYY'),'YYYY-MM-DD') <= '" + filterRequest.getEndDate() + "' and";
+//                        where = where + " to_char(to_date(created_on,'YYYY'),'dd-MM-yyyy HH:mm') <= '" + filterRequest.getEndDate() + "' and";
 //                    else
-//                        where = where + " to_char(created_on,'YYYY-MM-DD') <= '" + filterRequest.getEndDate() + "' and";
+//                        where = where + " to_char(created_on,'dd-MM-yyyy HH:mm') <= '" + filterRequest.getEndDate() + "' and";
 //                }
 //            }
 //            if (filterRequest.isLastDate()) {
@@ -1319,11 +1319,11 @@ public class DatabaseTablesRepository {
 //                    where = where + " DATE(created_on) >= DATE('" + filterRequest.getStartDate() + "') and";
 //                else {
 //                    if (Objects.nonNull(reportTrend) && reportTrend.equalsIgnoreCase("monthly"))
-//                        where = where + " to_char(to_date(created_on,'MON YYYY'),'YYYY-MM-DD') >= '" + filterRequest.getStartDate() + "' and";
+//                        where = where + " to_char(to_date(created_on,'MON YYYY'),'dd-MM-yyyy HH:mm') >= '" + filterRequest.getStartDate() + "' and";
 //                    else if (Objects.nonNull(reportTrend) && reportTrend.equalsIgnoreCase("yearly"))
-//                        where = where + " to_char(to_date(created_on,'YYYY'),'YYYY-MM-DD') >= '" + filterRequest.getStartDate() + "' and";
+//                        where = where + " to_char(to_date(created_on,'YYYY'),'dd-MM-yyyy HH:mm') >= '" + filterRequest.getStartDate() + "' and";
 //                    else
-//                        where = where + " to_char(created_on,'YYYY-MM-DD') >= '" + filterRequest.getStartDate() + "' and";
+//                        where = where + " to_char(created_on,'dd-MM-yyyy HH:mm') >= '" + filterRequest.getStartDate() + "' and";
 //                }
 //            }
 //            if (Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().equals("")) {
@@ -1331,11 +1331,11 @@ public class DatabaseTablesRepository {
 //                    where = where + " DATE(created_on) <= DATE('" + filterRequest.getEndDate() + "') and";
 //                else {
 //                    if (Objects.nonNull(reportTrend) && reportTrend.equalsIgnoreCase("monthly"))
-//                        where = where + " to_char(to_date(created_on,'MON YYYY'),'YYYY-MM-DD') <= '" + filterRequest.getEndDate() + "' and";
+//                        where = where + " to_char(to_date(created_on,'MON YYYY'),'dd-MM-yyyy HH:mm') <= '" + filterRequest.getEndDate() + "' and";
 //                    else if (Objects.nonNull(reportTrend) && reportTrend.equalsIgnoreCase("yearly"))
-//                        where = where + " to_char(to_date(created_on,'YYYY'),'YYYY-MM-DD') <= '" + filterRequest.getEndDate() + "' and";
+//                        where = where + " to_char(to_date(created_on,'YYYY'),'dd-MM-yyyy HH:mm') <= '" + filterRequest.getEndDate() + "' and";
 //                    else
-//                        where = where + " to_char(created_on,'YYYY-MM-DD') <= '" + filterRequest.getEndDate() + "' and";
+//                        where = where + " to_char(created_on,'dd-MM-yyyy HH:mm') <= '" + filterRequest.getEndDate() + "' and";
 //                }
 //            }
 //            if (filterRequest.isLastDate()) {
@@ -1581,8 +1581,8 @@ public class DatabaseTablesRepository {
 //    /*
 //     * public String formatedDate( String date ) { try { date =
 //     * date.substring(0,date.indexOf(".")); return LocalDateTime.parse(date,
-//     * DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).format(DateTimeFormatter.
-//     * ofPattern("yyyy-MM-dd")); }catch (Exception ex) {
+//     * DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")).format(DateTimeFormatter.
+//     * ofPattern("dd-MM-yyyy HH:mm")); }catch (Exception ex) {
 //     * logger.error(ex.getMessage(), ex); return "NA"; } }
 //     */
 //
@@ -1590,9 +1590,9 @@ public class DatabaseTablesRepository {
 //        try {
 //            if (date.contains(".")) {
 //                date = date.substring(0, date.indexOf("."));
-//                return LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//                return LocalDateTime.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")).format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
 //            } else {
-//                return LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//                return LocalDateTime.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")).format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
 //            }
 //        } catch (Exception ex) {
 //            logger.error(ex.getMessage(), ex);

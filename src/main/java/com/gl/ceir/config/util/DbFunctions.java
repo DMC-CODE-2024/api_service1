@@ -47,7 +47,7 @@ public class DbFunctions {
 		
 		if(Objects.isNull(dateFormat)) {
 			if(dialect.toLowerCase().contains("oracle")) {
-				dateFormat = "YYYY-MM-DD";
+				dateFormat = "dd-MM-yyyy HH:mm";
 			}else if (dialect.toLowerCase().contains("mysql")) {
 				dateFormat = "%Y-%m-%d";
 			}else {

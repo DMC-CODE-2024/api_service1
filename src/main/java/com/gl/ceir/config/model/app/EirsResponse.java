@@ -23,12 +23,12 @@ public class EirsResponse {
 
 	@Column(name = "created_on")
 	@CreationTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm")
 	private LocalDateTime createdOn;
 
 	@Column(name = "modified_on")
 	@UpdateTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm")
 	private LocalDateTime modifiedOn;
 
 	@Column(length = 1000)
@@ -45,6 +45,9 @@ public class EirsResponse {
 	private Integer active;
 	@Column(name = "remark")
 	private String remarks;
+
+	@Column(name = "subject")
+	private String subject;
 
 	@Transient
 	@JsonProperty(value = "auditTrailModel", access = JsonProperty.Access.WRITE_ONLY)
@@ -146,24 +149,30 @@ public class EirsResponse {
 		this.featureName = featureName;
 	}
 
-	@Override
-	public String toString() {
-		final StringBuilder sb = new StringBuilder("EirsResponse{");
-		sb.append("id=").append(id);
-		sb.append(", createdOn=").append(createdOn);
-		sb.append(", modified_on=").append(modifiedOn);
-		sb.append(", value='").append(value).append('\'');
-		sb.append(", tag='").append(tag).append('\'');
-		sb.append(", description='").append(description).append('\'');
-		sb.append(", language='").append(language).append('\'');
-		sb.append(", featureName='").append(featureName).append('\'');
-		sb.append(", type=").append(type);
-		sb.append(", active=").append(active);
-		sb.append(", remarks='").append(remarks).append('\'');
-		sb.append(", auditTrailModel=").append(auditTrailModel);
-		sb.append('}');
-		return sb.toString();
+	public String getSubject() {
+		return subject;
 	}
 
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
 
+	@Override
+	public String toString() {
+		return "EirsResponse{" +
+				"id=" + id +
+				", createdOn=" + createdOn +
+				", modifiedOn=" + modifiedOn +
+				", value='" + value + '\'' +
+				", tag='" + tag + '\'' +
+				", description='" + description + '\'' +
+				", language='" + language + '\'' +
+				", featureName='" + featureName + '\'' +
+				", type=" + type +
+				", active=" + active +
+				", remarks='" + remarks + '\'' +
+				", subject='" + subject + '\'' +
+				", auditTrailModel=" + auditTrailModel +
+				'}';
+	}
 }

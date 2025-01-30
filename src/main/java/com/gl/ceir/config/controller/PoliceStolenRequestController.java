@@ -23,16 +23,8 @@ public class PoliceStolenRequestController {
     com.gl.ceir.config.service.impl.LostStolenServiceImpl LostStolenServiceImpl;
 
     @Autowired
-    PropertiesReader propertiesReader;
-
-    @Autowired
     PoliceStolenService lostStolenRepo;
 
-    @Autowired
-    SystemConfigurationDbRepository systemConfigurationDbRepository;
-
-    @Autowired
-    CountryCodeRepo countryCodeRepo;
 
    // //@ApiOperation(value = "Mark device stolen.", response = GenricResponse.class)
     @RequestMapping(path = "/lostStolen/create", method = RequestMethod.POST)

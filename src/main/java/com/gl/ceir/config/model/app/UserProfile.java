@@ -39,7 +39,7 @@ public class UserProfile {
     }
 
     @CreationTimestamp
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime createdOn;
 
    // @Column(name = "user_id")

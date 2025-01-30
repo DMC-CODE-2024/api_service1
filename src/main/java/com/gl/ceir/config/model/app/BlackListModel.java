@@ -26,7 +26,7 @@ public class BlackListModel {
 	private Long sno;
 
 	@CreationTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm")
 	private LocalDateTime creationDate;
 	
 	

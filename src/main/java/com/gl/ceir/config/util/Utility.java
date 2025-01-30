@@ -16,7 +16,7 @@ public class Utility {
 	private final static String NUMERIC_STRING = "0123456789";
 	public String newDate(int nextdateDay) {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		Calendar cal = Calendar.getInstance();
 
 		cal.add(Calendar.DAY_OF_MONTH, nextdateDay);  
@@ -49,8 +49,8 @@ public class Utility {
 		/*SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd hh:mm:ss z yyyy");
 		java.util.Date date = format.parse(dateString);
 		 */
-		String dmyFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(localDateTime);
-		java.util.Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dmyFormat);
+		String dmyFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(localDateTime);
+		java.util.Date date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dmyFormat);
 		
 		return date;
 
@@ -65,7 +65,7 @@ public class Utility {
 
 	public String converedtlocalTime(LocalDateTime time) {
 		try {
-		DateTimeFormatter aFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); 
+		DateTimeFormatter aFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"); 
 		String date = time.format(aFormatter);
 		return date;
 		}

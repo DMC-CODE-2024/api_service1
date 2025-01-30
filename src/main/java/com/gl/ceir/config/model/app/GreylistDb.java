@@ -29,13 +29,13 @@ public class GreylistDb implements Serializable {
 	private Long id;
 	
 	@CreationTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm")
 	@Column(nullable = false, updatable = false)
 	private LocalDateTime createdOn;
 	
 	@JsonIgnore
 	@UpdateTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm")
 	private LocalDateTime modifiedOn;
 	private String imei;
 	@Column(length = 15)
@@ -53,7 +53,7 @@ public class GreylistDb implements Serializable {
 	private String imeiEsnMeid;
 	
 	//@Type(type="date")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
 	private Date expiryDate;
 	
 	@Column(name = "mode2")

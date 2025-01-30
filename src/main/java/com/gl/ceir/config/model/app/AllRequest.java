@@ -27,6 +27,10 @@ public class AllRequest{
 	private String publicIp;
 	@Transient
 	private String browser;
+
+	@Transient
+	private String type;
+
 	public String getUsername() {
 		return username;
 	}
@@ -85,30 +89,28 @@ public class AllRequest{
 	public void setBrowser(String browser) {
 		this.browser = browser;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("AllRequest [username=");
-		builder.append(username);
-		builder.append(", userTypeId=");
-		builder.append(userTypeId);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", featureId=");
-		builder.append(featureId);
-		builder.append(", imei=");
-		builder.append(imei);
-		builder.append(", nid=");
-		builder.append(nid);
-		builder.append(", userType=");
-		builder.append(userType);
-		builder.append(", publicIp=");
-		builder.append(publicIp);
-		builder.append(", browser=");
-		builder.append(browser);
-		builder.append("]");
-		return builder.toString();
+		return "AllRequest{" +
+				"username='" + username + '\'' +
+				", userTypeId=" + userTypeId +
+				", userId=" + userId +
+				", featureId=" + featureId +
+				", imei='" + imei + '\'' +
+				", nid='" + nid + '\'' +
+				", userType='" + userType + '\'' +
+				", publicIp='" + publicIp + '\'' +
+				", browser='" + browser + '\'' +
+				", type='" + type + '\'' +
+				'}';
 	}
-	 
-	
 }

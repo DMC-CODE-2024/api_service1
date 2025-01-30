@@ -52,6 +52,7 @@ public class EirsResponseParamUpdateService {
             result.setFeatureName(eirsResponse.getFeatureName());
             result.setRemarks(eirsResponse.getRemarks());
             result.setLanguage(eirsResponse.getLanguage());
+            result.setSubject(eirsResponse.getSubject());
 
             logger.info("payload to save {}", result);
             updateEirsResponseParam(result);

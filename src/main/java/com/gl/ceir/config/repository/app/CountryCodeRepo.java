@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface CountryCodeRepo  extends JpaRepository<CountryCodeModel, Long>, JpaSpecificationExecutor<CountryCodeModel> {
 
-    @Query(value="select * from countries_Phone_code s", nativeQuery = true)
+    @Query(value="select * from countries_phone_code s", nativeQuery = true)
     public List<CountryCodeModel> fetchCountryCode();
 }

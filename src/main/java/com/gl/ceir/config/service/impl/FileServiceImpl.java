@@ -44,89 +44,69 @@ public class FileServiceImpl {
         String fileName = null;
         SystemConfigurationDb systemConfigurationDb = configurationManagementServiceImpl.findByTag(ConfigTags.sample_file_link);
         String featureName = null;
-        if (featureId == 3) {
-            featureName = Features.CONSIGNMENT;
-        } else if (featureId == 4) {
-            featureName = Features.STOCK;
-        } else if (featureId == 12) {
-            featureName = Features.REGISTER_DEVICE;
-        } else if (featureId == 5) {
-            featureName = Features.STOLEN_RECOVERY;
-        } else if (featureId == 7) {
-            featureName = Features.BLOCK_UNBLOCK;
-        } else if (featureId == 21) {
-            featureName = Features.TYPE_APPROVE;
-        } else if (featureId == 9) {
-            featureName = Features.GREY_LIST;
-        } else if (featureId == 10) {
-            featureName = Features.BLACK_LIST;
-        } else if (featureId == 82) {
+        if (request.getType().equalsIgnoreCase("sample_ta")) {
             featureName = Features.TYPE_APPROVED;
-        } else if (featureId == 83) {
+        } else if (request.getType().equalsIgnoreCase("sample_qa")) {
             featureName = Features.QUALIFIED_AGENTS;
-        } else if (featureId == 85) {
+        } else if (request.getType().equalsIgnoreCase("sample_lm")) {
             featureName = Features.LOCAL_MANUFACTURER;
-        } else if (featureId == 86) {
+        } else if (request.getType().equalsIgnoreCase("sample_el")) {
             featureName = Features.EXCEPTION_LIST;
         }
-        else if (featureId == 87) {
+        else if (request.getType().equalsIgnoreCase("sample_bimei")) {
             featureName = Features.BLOCK_LIST;
         }
-        else if (featureId == 89) {
+        else if (request.getType().equalsIgnoreCase("sample_btac_imei")) {
             featureName = Features.BLOCK_TAC;
         }
-        else if (featureId == 101) {
+        else if (request.getType().equalsIgnoreCase("sample_st")) {
             featureName = Features.STOLEN_BULK;
         }
-        else if (featureId == 112) {
+        else if (request.getType().equalsIgnoreCase("sample_sts")) {
             featureName = Features.STOLEN_STATUS;
         }
+        else if (request.getType().equalsIgnoreCase("sample_bulkimei")) {
+            featureName = Features.BULK_IMEI;
+        }
+
         AuditTrail auditTrail = new AuditTrail(request.getUserId(),
                 request.getUsername(),
                 request.getUserTypeId(),
                 request.getUserType(),
-                featureId,
+                0L,
                 featureName,
                 Features.SAMPLE_FILE,
                 "", "NA", request.getUserType(), request.getPublicIp(), request.getBrowser());
         logger.info("AUDIT : View in audit_trail. " + auditTrail);
         auditTrailRepository.save(auditTrail);
-        switch (featureId) {
-            case 3:
-                fileName = "Consignment.csv";
-                break;
-            case 4:
-                fileName = "Stock.csv";
-                break;
-            case 5:
-                fileName = "StolenAndRecovery.csv";
-                break;
-            case 7:
-                fileName = "Blockunblock.csv";
-                break;
-            case 82:
+        switch (request.getType()) {
+
+            case "sample_ta":
                 fileName = "Type_Approved.txt";
                 break;
-            case 83:
+            case "sample_qa":
                 fileName = "Qualified_Agent.txt";
                 break;
-            case 85:
+            case "sample_lm":
                 fileName = "Local_Manufacturer_IMEI.txt";
                 break;
-            case 86:
+            case "sample_el":
                 fileName = "Exception_List.csv";
                 break;
-            case 87:
+            case "sample_bimei":
                 fileName = "Block_IMEI.csv";
                 break;
-            case 89:
+            case "sample_btac_imei":
                 fileName = "Blocked_TAC_List.csv";
                 break;
-            case 101:
+            case "sample_st":
                 fileName="Bulk-Stolen-Sample.csv";
                 break;
-            case 112:
+            case "sample_sts":
                 fileName="Stolen_Status_Sample_File.csv";
+                break;
+            case "sample_bulkimei":
+                fileName="Bulk_IMEI.csv";
             default:
                 break;
         }

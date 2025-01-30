@@ -24,7 +24,7 @@ public class VipList implements Serializable {
 	private ImeiMsisdnIdentity imeiMsisdnIdentity;
 
 	@CreationTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm")
 	@Column(nullable = false, updatable = false)
 	private LocalDateTime createdOn;
 

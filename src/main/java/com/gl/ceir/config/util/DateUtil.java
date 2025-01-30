@@ -22,7 +22,7 @@ public class DateUtil {
 
 	public static String nextDate(int nextdateDay, String format) {
 		if(Objects.isNull(format)) {
-			format = "yyyy-MM-dd";
+			format = "dd-MM-yyyy HH:mm";
 		}
 
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
@@ -36,8 +36,8 @@ public class DateUtil {
 	}
 
 	public Date formatChanger(LocalDateTime localDateTime ) throws ParseException {
-		String dmyFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(localDateTime);
-		java.util.Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dmyFormat);
+		String dmyFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(localDateTime);
+		java.util.Date date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dmyFormat);
 
 		return date;
 	}
@@ -62,7 +62,7 @@ public class DateUtil {
 	}
 
 	public static Date addDaysInDate(Integer days,Date date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		Calendar c = Calendar.getInstance();
 		c.setTime(date); 
 		c.add(Calendar.DATE, days); // Adding days
@@ -73,7 +73,7 @@ public class DateUtil {
 	public static Date stringToDate(String date) {
 		Date date1;
 		try {
-			date1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+			date1 = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(date);
 			return date1;
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -83,7 +83,7 @@ public class DateUtil {
 
 	public static String dateToString(Date date) {
 		try {
-			DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+			DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy HH:mm");
 			String currentDate=dateFormat.format(date);
 			return currentDate;
 		}
