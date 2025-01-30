@@ -2,6 +2,7 @@ package com.gl.ceir.config.controller;
 
 
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.externalproperties.FeatureNameMap;
 import com.gl.ceir.config.model.app.*;
 import com.gl.ceir.config.model.aud.AuditTrail;
 import com.gl.ceir.config.model.constants.Features;
@@ -32,8 +33,11 @@ public class ConfigurationController {
 
     @Autowired
     PropertiesReader propertiesReader;
+    @Autowired
+    private FeatureNameMap featureNameMap;
+    String requestType = "SYSTEM_MGMT";
 
-    ////@ApiOperation(value = "System Config view All Data", response = SystemConfigurationDb.class)
+    /// /@ApiOperation(value = "System Config view All Data", response = SystemConfigurationDb.class)
     @PostMapping("/system/viewAll")
     public MappingJacksonValue findSystemDetails() {
 
@@ -81,7 +85,7 @@ public class ConfigurationController {
 
         auditTrailRepository.save(new AuditTrail(systemConfigurationDb.getUserId(), systemConfigurationDb.getUserName(),
                 Long.valueOf(systemConfigurationDb.getUserTypeId()), systemConfigurationDb.getUserType(), Long.valueOf(systemConfigurationDb.getFeatureId()),
-                Features.SYSTEM_MANAGEMENT, SubFeatures.VIEW, "", "NA", systemConfigurationDb.getRoleType(), systemConfigurationDb.getPublicIp(), systemConfigurationDb.getBrowser()));
+                featureNameMap.get(requestType), featureNameMap.get("VIEW"), "", "NA", systemConfigurationDb.getRoleType(), systemConfigurationDb.getPublicIp(), systemConfigurationDb.getBrowser()));
         logger.info("SYSTEM_MANAGEMENT : successully inserted in audit trail ");
         logger.info("Response to send=" + pocessDetails);
 
@@ -99,7 +103,7 @@ public class ConfigurationController {
         if (GenricResponse.getErrorCode() == 200) {
             auditTrailRepository.save(new AuditTrail(systemConfigurationDb.getUserId(), systemConfigurationDb.getUserName(),
                     Long.valueOf(systemConfigurationDb.getUserTypeId()), systemConfigurationDb.getUserType(), Long.valueOf(systemConfigurationDb.getFeatureId()),
-                    Features.SYSTEM_MANAGEMENT, SubFeatures.UPDATE, "", "NA", systemConfigurationDb.getRoleType(), systemConfigurationDb.getPublicIp(), systemConfigurationDb.getBrowser()));
+                    featureNameMap.get(requestType), featureNameMap.get("UPDATE"), "", "NA", systemConfigurationDb.getRoleType(), systemConfigurationDb.getPublicIp(), systemConfigurationDb.getBrowser()));
             logger.info("SYSTEM_MANAGEMENT : successully inserted in audit trail ");
         }
         logger.info("Update sytem config response=" + GenricResponse);

@@ -2,6 +2,7 @@ package com.gl.ceir.config.controller;
 
 import java.util.List;
 
+import com.gl.ceir.config.externalproperties.FeatureNameMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,90 +32,92 @@ import java.util.Optional;
 @RestController
 public class RuleEngineController {
 
-	private static final Logger logger = LogManager.getLogger(RuleEngineController.class);
+    private static final Logger logger = LogManager.getLogger(RuleEngineController.class);
 
-	@Autowired
-	RuleEngineServiceImpl ruleEngineServiceImpl;
-	
-	@Autowired
-	AuditTrailRepository auditTrailRepository;
-	
+    @Autowired
+    RuleEngineServiceImpl ruleEngineServiceImpl;
 
-	//@ApiOperation(value = "pagination View filtered audit-trail", response = RuleEngine.class)
-	@PostMapping("/filter/rule-engine")
-	public MappingJacksonValue getFilteredData(@RequestBody FilterRequest filterRequest,
-			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-			@RequestParam(value = "file", defaultValue = "0") Integer file) {
+    @Autowired
+    AuditTrailRepository auditTrailRepository;
 
-		MappingJacksonValue mapping = null;
-if(file == 0) {
-		logger.info("Request to view filtered rule engine = " + filterRequest);
-		Page<RuleEngine> ruleEngine =  ruleEngineServiceImpl.filterRuleEngine(filterRequest, pageNo, pageSize,"view");
-		mapping = new MappingJacksonValue(ruleEngine);
+    @Autowired
+    FeatureNameMap featureNameMap;
 
-		logger.info("Response of view Request = " + mapping);
-}
-else {
-	FileDetails fileDetails = ruleEngineServiceImpl.getFile(filterRequest);
-	mapping = new MappingJacksonValue(fileDetails);
 
-	
-}
-		return mapping;
-	}
+    //@ApiOperation(value = "pagination View filtered audit-trail", response = RuleEngine.class)
+    @PostMapping("/filter/rule-engine")
+    public MappingJacksonValue getFilteredData(@RequestBody FilterRequest filterRequest,
+                                               @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+                                               @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+                                               @RequestParam(value = "file", defaultValue = "0") Integer file) {
 
-	//@ApiOperation(value = "View By Id || Audit Trail", response = MappingJacksonValue.class)
-	@GetMapping("/rule-engine/{id}")
-	public MappingJacksonValue findAuditTrailById(@PathVariable long id) {
+        MappingJacksonValue mapping = null;
+        if (file == 0) {
+            logger.info("Request to view filtered rule engine = " + filterRequest);
+            Page<RuleEngine> ruleEngine = ruleEngineServiceImpl.filterRuleEngine(filterRequest, pageNo, pageSize, "view");
+            mapping = new MappingJacksonValue(ruleEngine);
 
-		logger.info("Get rule engine by id [" + id + "]");
+            logger.info("Response of view Request = " + mapping);
+        } else {
+            FileDetails fileDetails = ruleEngineServiceImpl.getFile(filterRequest);
+            mapping = new MappingJacksonValue(fileDetails);
 
-		Optional<RuleEngine> ruleEngine = ruleEngineServiceImpl.findById(id);
 
-		MappingJacksonValue mapping = new MappingJacksonValue(ruleEngine);
+        }
+        return mapping;
+    }
 
-		logger.info("Response to send= " + mapping);
+    //@ApiOperation(value = "View By Id || Audit Trail", response = MappingJacksonValue.class)
+    @GetMapping("/rule-engine/{id}")
+    public MappingJacksonValue findAuditTrailById(@PathVariable long id) {
 
-		return mapping;
-	}
-	
-	//@ApiOperation(value = "All rule name", response = RuleEngine.class)
-	@GetMapping("/all/rule-engine")
-	public MappingJacksonValue getFilteredData() {
+        logger.info("Get rule engine by id [" + id + "]");
 
-		MappingJacksonValue mapping = null;
+        Optional<RuleEngine> ruleEngine = ruleEngineServiceImpl.findById(id);
 
-		logger.info("Request to view all rule engine");
-		List<RuleEngine> ruleEngine =  ruleEngineServiceImpl.allRuleNames();
-		mapping = new MappingJacksonValue(ruleEngine);
+        MappingJacksonValue mapping = new MappingJacksonValue(ruleEngine);
 
-		logger.info("Response of view Request = " + mapping);
+        logger.info("Response to send= " + mapping);
 
-		return mapping;
-	}
-	
-	//@ApiOperation(value = "Update By Id || Rule Engine", response = MappingJacksonValue.class)
-	@PutMapping("/rule-engine")
-	public MappingJacksonValue updateAuditTrailById(@RequestBody RuleEngine ruleEngine) {
+        return mapping;
+    }
 
-		logger.info("Update rule engine [" + ruleEngine + "]");
+    //@ApiOperation(value = "All rule name", response = RuleEngine.class)
+    @GetMapping("/all/rule-engine")
+    public MappingJacksonValue getFilteredData() {
 
-		GenricResponse genricResponse = ruleEngineServiceImpl.updateById(ruleEngine);
-		
-		MappingJacksonValue mapping = new MappingJacksonValue(ruleEngine);
+        MappingJacksonValue mapping = null;
 
-		logger.info("Response to send= " + mapping);
-		if(genricResponse.getErrorCode() == 0) {
-			auditTrailRepository.save( new AuditTrail(Long.valueOf(ruleEngine.getUserId()),
-					ruleEngine.getUserName(), Long.valueOf(ruleEngine.getUserTypeId()),
-					   "SystemAdmin", Long.valueOf(ruleEngine.getFeatureId()),
-					  Features.RULE_LIST, SubFeatures.UPDATE, "","NA",
-					  ruleEngine.getRoleType(),ruleEngine.getPublicIp(),ruleEngine.getBrowser()));
-					
-		}
+        logger.info("Request to view all rule engine");
+        List<RuleEngine> ruleEngine = ruleEngineServiceImpl.allRuleNames();
+        mapping = new MappingJacksonValue(ruleEngine);
 
-		return mapping;
-	}
+        logger.info("Response of view Request = " + mapping);
+
+        return mapping;
+    }
+
+    //@ApiOperation(value = "Update By Id || Rule Engine", response = MappingJacksonValue.class)
+    @PutMapping("/rule-engine")
+    public MappingJacksonValue updateAuditTrailById(@RequestBody RuleEngine ruleEngine) {
+        String requestType = featureNameMap.get("RULE");
+        logger.info("Update rule engine [" + ruleEngine + "]");
+
+        GenricResponse genricResponse = ruleEngineServiceImpl.updateById(ruleEngine);
+
+        MappingJacksonValue mapping = new MappingJacksonValue(ruleEngine);
+
+        logger.info("Response to send= " + mapping);
+        if (genricResponse.getErrorCode() == 0) {
+            auditTrailRepository.save(new AuditTrail(Long.valueOf(ruleEngine.getUserId()),
+                    ruleEngine.getUserName(), Long.valueOf(ruleEngine.getUserTypeId()),
+                    "SystemAdmin", Long.valueOf(ruleEngine.getFeatureId()),
+                    featureNameMap.get(requestType), featureNameMap.get("UPDATE"), "", "NA",
+                    ruleEngine.getRoleType(), ruleEngine.getPublicIp(), ruleEngine.getBrowser()));
+
+        }
+
+        return mapping;
+    }
 
 }

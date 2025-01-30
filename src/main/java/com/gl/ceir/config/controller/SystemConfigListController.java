@@ -1,5 +1,6 @@
 package com.gl.ceir.config.controller;
 
+import com.gl.ceir.config.externalproperties.FeatureNameMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,127 +28,130 @@ import com.gl.ceir.config.service.impl.SystemConfigListServiceImpl;
 @RestController
 public class SystemConfigListController {
 
-	private static final Logger logger = LogManager.getLogger(SystemConfigListController.class);
+    private static final Logger logger = LogManager.getLogger(SystemConfigListController.class);
 
-	@Autowired
-	SystemConfigListServiceImpl systemConfigListServiceImpl;
+    @Autowired
+    SystemConfigListServiceImpl systemConfigListServiceImpl;
 
-	@Autowired
-	AuditTrailRepository auditTrailRepository;
-	//@ApiOperation(value = "Save || system-config-list", response = SystemConfigListDb.class)
-	@PostMapping("/save/system-config-list")
-	public MappingJacksonValue save(@RequestBody SystemConfigListDb systemConfigListDb) {
+    @Autowired
+    AuditTrailRepository auditTrailRepository;
+    @Autowired
+    private FeatureNameMap featureNameMap;
 
-		logger.info("Save system-config-list request [" + systemConfigListDb + "]");
+    //@ApiOperation(value = "Save || system-config-list", response = SystemConfigListDb.class)
+    @PostMapping("/save/system-config-list")
+    public MappingJacksonValue save(@RequestBody SystemConfigListDb systemConfigListDb) {
 
-		GenricResponse genricResponse = systemConfigListServiceImpl.saveSystemConfigList(systemConfigListDb);
+        logger.info("Save system-config-list request [" + systemConfigListDb + "]");
 
-		MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListDb);
+        GenricResponse genricResponse = systemConfigListServiceImpl.saveSystemConfigList(systemConfigListDb);
 
-		logger.info("Response to send for save on system-config-list [ " + genricResponse + "] = " + mapping);
+        MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListDb);
 
-		return mapping;
-	}
-	
-	//@ApiOperation(value = "Update || system-config-list", response = SystemConfigListDb.class)
-	@PutMapping("/system-config-list")
-	public MappingJacksonValue update(@RequestBody SystemConfigListDb systemConfigListDb) {
+        logger.info("Response to send for save on system-config-list [ " + genricResponse + "] = " + mapping);
 
-		logger.info("Get system-config-list request [" + systemConfigListDb + "]");
+        return mapping;
+    }
 
-		GenricResponse genricResponse = systemConfigListServiceImpl.updateSystemConfigList(systemConfigListDb);
+    //@ApiOperation(value = "Update || system-config-list", response = SystemConfigListDb.class)
+    @PutMapping("/system-config-list")
+    public MappingJacksonValue update(@RequestBody SystemConfigListDb systemConfigListDb) {
 
-		MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListDb);
+        logger.info("Get system-config-list request [" + systemConfigListDb + "]");
 
-		logger.info("Response to send for save on system-config-list [ " + genricResponse + "] = " + mapping);
+        GenricResponse genricResponse = systemConfigListServiceImpl.updateSystemConfigList(systemConfigListDb);
 
-		return mapping;
-	}
+        MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListDb);
 
-	
-	//@ApiOperation(value = "pagination View filtered system-config-list", response = SystemConfigListDb.class)
-	@PostMapping("/filter/system-config-list")
-	public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,
-			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-			@RequestParam(value = "file", defaultValue = "0") Integer file) {
+        logger.info("Response to send for save on system-config-list [ " + genricResponse + "] = " + mapping);
 
-		MappingJacksonValue mapping = null;
-		if(file == 0) {
-			logger.info("Request to view filtered audit trail = " + filterRequest);
-			Page<SystemConfigListDb> auditTrail =  systemConfigListServiceImpl.filter(filterRequest, pageNo, pageSize);
-			mapping = new MappingJacksonValue(auditTrail);
-		}else {
-			logger.info("Request to export filtered audit trail = " + filterRequest);
-			FileDetails fileDetails = systemConfigListServiceImpl.getFilteredAuditTrailInFile(filterRequest);
-			mapping = new MappingJacksonValue(fileDetails);
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 0L, filterRequest.getUserType(), 0L, 
-					Features.FIELD_MANGEMENT, SubFeatures.EXPORT, "","NA",filterRequest.getUserType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
-		}
+        return mapping;
+    }
 
-		logger.info("Response of view Request = " + mapping);
 
-		return mapping;
-	}
-	
-	//@ApiOperation(value = "View By Id || system-config-list", response = String.class)
-	@PostMapping("/get/system-config-list")
-	public MappingJacksonValue findAuditTrailById(@RequestBody FilterRequest filterRequest) {
+    //@ApiOperation(value = "pagination View filtered system-config-list", response = SystemConfigListDb.class)
+    @PostMapping("/filter/system-config-list")
+    public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,
+                                                          @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+                                                          @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+                                                          @RequestParam(value = "file", defaultValue = "0") Integer file) {
 
-		logger.info("Get system-config-list request [" + filterRequest + "]");
+        MappingJacksonValue mapping = null;
+        if (file == 0) {
+            logger.info("Request to view filtered audit trail = " + filterRequest);
+            Page<SystemConfigListDb> auditTrail = systemConfigListServiceImpl.filter(filterRequest, pageNo, pageSize);
+            mapping = new MappingJacksonValue(auditTrail);
+        } else {
+            logger.info("Request to export filtered audit trail = " + filterRequest);
+            FileDetails fileDetails = systemConfigListServiceImpl.getFilteredAuditTrailInFile(filterRequest);
+            mapping = new MappingJacksonValue(fileDetails);
+            auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 0L, filterRequest.getUserType(), 0L,
+                    featureNameMap.get("SYSTEM_MGMT"), featureNameMap.get("EXPORT"), "", "NA", filterRequest.getUserType(), filterRequest.getPublicIp(), filterRequest.getBrowser()));
+        }
 
-		//GenricResponse systemConfigListDb = systemConfigListServiceImpl.findById(filterRequest);
+        logger.info("Response of view Request = " + mapping);
 
-		MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListServiceImpl.findById(filterRequest));
+        return mapping;
+    }
 
-		logger.info("Response to send on system-config-list [ " + mapping + "]"  );
+    //@ApiOperation(value = "View By Id || system-config-list", response = String.class)
+    @PostMapping("/get/system-config-list")
+    public MappingJacksonValue findAuditTrailById(@RequestBody FilterRequest filterRequest) {
 
-		return mapping;
-	}
-	
-	//@ApiOperation(value = "All tags list || system-config-list", response = String.class)
-	@PostMapping("/tags/system-config-list")
-	public MappingJacksonValue getTagsList(@RequestBody FilterRequest filterRequest) {
+        logger.info("Get system-config-list request [" + filterRequest + "]");
 
-		logger.info("Get system-config-list." + filterRequest);
+        //GenricResponse systemConfigListDb = systemConfigListServiceImpl.findById(filterRequest);
 
-		GenricResponse uniqueTags = systemConfigListServiceImpl.getTagsList(filterRequest);
+        MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListServiceImpl.findById(filterRequest));
 
-		MappingJacksonValue mapping = new MappingJacksonValue(uniqueTags);
+        logger.info("Response to send on system-config-list [ " + mapping + "]");
 
-		logger.info("Response to send for all tags of system-config-list = " + mapping);
+        return mapping;
+    }
 
-		return mapping;
-	}
-	
-	//@ApiOperation(value = "All tags list with display name|| system-config-list", response = String.class)
-	@PostMapping("/projection/tags/system-config-list")
-	public MappingJacksonValue findDistinctTagsWithDescription(@RequestBody FilterRequest filterRequest) {
+    //@ApiOperation(value = "All tags list || system-config-list", response = String.class)
+    @PostMapping("/tags/system-config-list")
+    public MappingJacksonValue getTagsList(@RequestBody FilterRequest filterRequest) {
 
-		logger.info("Get findDistinctTagsWithDescription ." + filterRequest);
+        logger.info("Get system-config-list." + filterRequest);
 
-		GenricResponse uniqueTags = systemConfigListServiceImpl.findDistinctTagsWithDescription(filterRequest);
+        GenricResponse uniqueTags = systemConfigListServiceImpl.getTagsList(filterRequest);
 
-		MappingJacksonValue mapping = new MappingJacksonValue(uniqueTags);
+        MappingJacksonValue mapping = new MappingJacksonValue(uniqueTags);
 
-		logger.info("Response to send for all tags of system-config-list = " + mapping);
+        logger.info("Response to send for all tags of system-config-list = " + mapping);
 
-		return mapping;
-	}
-	
-	//@ApiOperation(value = "All tags list || system-config-list", response = String.class)
-	@DeleteMapping("/tags/system-config-list")
-	public MappingJacksonValue deleteValue(@RequestBody FilterRequest filterRequest) {
+        return mapping;
+    }
 
-		logger.info("Delete system-config-list. " + filterRequest);
+    //@ApiOperation(value = "All tags list with display name|| system-config-list", response = String.class)
+    @PostMapping("/projection/tags/system-config-list")
+    public MappingJacksonValue findDistinctTagsWithDescription(@RequestBody FilterRequest filterRequest) {
 
-		GenricResponse uniqueTags = systemConfigListServiceImpl.deleteValue(filterRequest);
+        logger.info("Get findDistinctTagsWithDescription ." + filterRequest);
 
-		MappingJacksonValue mapping = new MappingJacksonValue(uniqueTags);
+        GenricResponse uniqueTags = systemConfigListServiceImpl.findDistinctTagsWithDescription(filterRequest);
 
-		logger.info("Response to send for all tags of system-config-list = " + mapping);
+        MappingJacksonValue mapping = new MappingJacksonValue(uniqueTags);
 
-		return mapping;
-	}
-	
+        logger.info("Response to send for all tags of system-config-list = " + mapping);
+
+        return mapping;
+    }
+
+    //@ApiOperation(value = "All tags list || system-config-list", response = String.class)
+    @DeleteMapping("/tags/system-config-list")
+    public MappingJacksonValue deleteValue(@RequestBody FilterRequest filterRequest) {
+
+        logger.info("Delete system-config-list. " + filterRequest);
+
+        GenricResponse uniqueTags = systemConfigListServiceImpl.deleteValue(filterRequest);
+
+        MappingJacksonValue mapping = new MappingJacksonValue(uniqueTags);
+
+        logger.info("Response to send for all tags of system-config-list = " + mapping);
+
+        return mapping;
+    }
+
 }

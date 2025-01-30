@@ -4,6 +4,7 @@ import com.gl.ceir.config.config.ConfigTags;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.configuration.SortDirection;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.externalproperties.FeatureNameMap;
 import com.gl.ceir.config.model.app.*;
 import com.gl.ceir.config.model.aud.AuditTrail;
 import com.gl.ceir.config.model.constants.*;
@@ -32,6 +33,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
@@ -69,6 +71,9 @@ public class MSISDNSeriesImpl {
 
     private static final Logger logger = LogManager.getLogger(MSISDNSeriesImpl.class);
 
+    @Autowired
+    FeatureNameMap featureNameMap;
+
     @Transactional
     public GenricResponse save(MSISDNSeriesModel msisdnSeriesModel) {
         if (Objects.isNull(msisdnSeriesModel)) {
@@ -80,7 +85,7 @@ public class MSISDNSeriesImpl {
             MSISDNSeriesModel save = msisdnSeriesModelRepository.save(msisdnSeriesModel);
             logger.info("MSISDNSeriesModel request payload saved : " + save);
 
-            auditTrailOperation(msisdnSeriesModel, Features.OPERATOR_CONFIGURATION, SubFeatures.Save);
+            auditTrailOperation(msisdnSeriesModel, featureNameMap.get("OPERATOR_SERIES"), featureNameMap.get("ADD"));
             return genricResponse = new GenricResponse(0, "MSISDN Series successfully inserted", "NA", save);
 
         } catch (Exception e) {
@@ -117,7 +122,7 @@ public class MSISDNSeriesImpl {
 
             logger.info("MSISDNSeriesModel payload saved : " + msisdnSeriesModel);
 
-            auditTrailOperation(msisdnSeriesModel, Features.OPERATOR_CONFIGURATION, SubFeatures.UPDATE);
+            auditTrailOperation(msisdnSeriesModel, featureNameMap.get("OPERATOR_SERIES"), featureNameMap.get("UPDATE"));
 
             genricResponse = new GenricResponse(0, "MSISDN Series successfully updated", "NA", save);
         } catch (Exception e) {
@@ -136,7 +141,7 @@ public class MSISDNSeriesImpl {
                     "UserId cann't be less than 1", "NA");
         }
 
-        auditTrailOperation(msisdnSeriesModel, Features.OPERATOR_CONFIGURATION, SubFeatures.DELETE);
+        auditTrailOperation(msisdnSeriesModel,  featureNameMap.get("OPERATOR_SERIES"), featureNameMap.get("DELETE"));
 
         Predicate<Long> isIdExist = (x) -> msisdnSeriesModelRepository.existsById(x);
 
@@ -238,7 +243,7 @@ public class MSISDNSeriesImpl {
                     fileModel.setUserId(data.getUser().getUsername());
                     fileModel.setSeriesType(data.getSeriesType());
                     fileModel.setSeriesStart(data.getSeriesStart());
-                   // fileModel.setSeriesEnd(data.getSeriesEnd());
+                    // fileModel.setSeriesEnd(data.getSeriesEnd());
                     fileRecords.add(fileModel);
                 }
                 logger.info("Exported data : [" + fileRecords + "]");
@@ -248,7 +253,7 @@ public class MSISDNSeriesImpl {
             }
             logger.info("fileName [" + fileName + "] filePath [" + filepath + "] download link [" + link.getValue() + "]");
 
-            auditTrailOperation(msisdnSeriesModel, Features.OPERATOR_CONFIGURATION, SubFeatures.EXPORT);
+            auditTrailOperation(msisdnSeriesModel,  featureNameMap.get("OPERATOR_SERIES"), featureNameMap.get("EXPORT"));
 
             FileDetails fileDetails = new FileDetails(fileName, filepath.getValue(),
                     link.getValue().replace("$LOCAL_IP", propertiesReader.localIp) + fileName);
@@ -272,9 +277,9 @@ public class MSISDNSeriesImpl {
         logger.info("FilterRequest payload : [" + msisdnSeriesModel + "]");
         GenericSpecificationBuilder<MSISDNSeriesModel> cmsb = new GenericSpecificationBuilder<>(
                 propertiesReader.dialect);
-        String subFeature = msisdnSeriesModel.getAuditTraildDTO().getFilterDTO().isFilter() == true ? SubFeatures.FILTER : SubFeatures.VIEW_ALL;
+        String subFeature = msisdnSeriesModel.getAuditTraildDTO().getFilterDTO().isFilter() == true ? SubFeatures.FILTER : featureNameMap.get("VIEWALL");
 
-        auditTrailOperation(msisdnSeriesModel, Features.OPERATOR_CONFIGURATION, subFeature);
+        auditTrailOperation(msisdnSeriesModel, featureNameMap.get("OPERATOR_SERIES"), subFeature);
 
         if (Objects.nonNull(msisdnSeriesModel.getAuditTraildDTO().getFilterDTO().getStartDate()) && !msisdnSeriesModel.getAuditTraildDTO().getFilterDTO().getStartDate().isEmpty())
             cmsb.with(new SearchCriteria("createdOn", msisdnSeriesModel.getAuditTraildDTO().getFilterDTO().getStartDate(), SearchOperation.GREATER_THAN,

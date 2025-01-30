@@ -1,5 +1,6 @@
 package com.gl.ceir.config.feature.addressmanagement.service;
 
+import com.gl.ceir.config.externalproperties.FeatureNameMap;
 import com.gl.ceir.config.feature.addressmanagement.FeaturesEnum;
 import com.gl.ceir.config.feature.addressmanagement.audit_trail.AuditTrailService;
 import com.gl.ceir.config.feature.addressmanagement.paging.AddressListManagementPaging;
@@ -9,6 +10,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Service;
@@ -31,11 +33,14 @@ public class AddressListManagementPagingService {
         this.addressListMgmtRepository = addressListMgmtRepository;
     }
 
+    @Autowired
+    private FeatureNameMap featureNameMap;
+
     public MappingJacksonValue paging(AddressEntity addressEntity, int pageNo, int pageSize) {
         Page<AddressEntity> page = addressListManagementPaging.findAll(addressEntity, pageNo, pageSize);
-        String requestType = "ADDRESS_MGMT_VIEWALL";
+        String requestType = "ADDRESS_MGMT";
         logger.info("requestType [" + requestType + "]");
-        auditTrailService.auditTrailOperation(addressEntity.getAuditTrailModel(), FeaturesEnum.getFeatureName(requestType), FeaturesEnum.getSubFeatureName(requestType));
+        auditTrailService.auditTrailOperation(addressEntity.getAuditTrailModel(), featureNameMap.get(requestType), featureNameMap.get("VIEWALL"));
         return new MappingJacksonValue(page);
     }
 

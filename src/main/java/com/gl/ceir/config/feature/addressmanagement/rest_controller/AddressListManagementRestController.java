@@ -1,4 +1,4 @@
-package com.gl.ceir.config.feature.rest_controller;
+package com.gl.ceir.config.feature.addressmanagement.rest_controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.gl.ceir.config.feature.addressmanagement.service.AddressListManagementDistinct;

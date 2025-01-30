@@ -4,6 +4,7 @@ package com.gl.ceir.config.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.gl.ceir.config.externalproperties.FeatureNameMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,10 @@ public class CheckIMEIContext {
 	CheckIMEIContentRepo checkIMEIContentRepo;
 
 	private static final Logger logger = LogManager.getLogger(ConfigurationController.class);
+
+	@Autowired
+	private FeatureNameMap featureNameMap;
+	String requestType = "IMEI_CONTENT_MGMT";
 
 	//@ApiOperation(value = "Paginated view of check IMEI param .", response = CheckIMEIResponseParam.class)
 	@PostMapping("/filter/checkIMEIContent")
@@ -111,7 +116,7 @@ public class CheckIMEIContext {
 		if(GenricResponse.getErrorCode()==200) {
 			auditTrailRepository.save(new AuditTrail(checkIMEIResponseParam.getUserId(), checkIMEIResponseParam.getUserName(),
 					Long.valueOf(checkIMEIResponseParam.getUserTypeId()), "SystemAdmin", Long.valueOf(checkIMEIResponseParam.getFeatureId()),
-					Features.Check_IMEI_Messages, SubFeatures.UPDATE, "", "NA",checkIMEIResponseParam.getRoleType(),checkIMEIResponseParam.getPublicIp(),checkIMEIResponseParam.getBrowser()));
+					featureNameMap.get(requestType), featureNameMap.get("UPDATE"), "", "NA",checkIMEIResponseParam.getRoleType(),checkIMEIResponseParam.getPublicIp(),checkIMEIResponseParam.getBrowser()));
 			logger.info("Check IMEI content update : successfully inserted in audit trail ");
 		}
 		logger.info("Update Check IMEI content  response="+GenricResponse);

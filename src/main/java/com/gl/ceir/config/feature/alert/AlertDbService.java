@@ -3,6 +3,7 @@ package com.gl.ceir.config.feature.alert;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.configuration.SortDirection;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.externalproperties.FeatureNameMap;
 import com.gl.ceir.config.model.app.*;
 import com.gl.ceir.config.model.aud.AuditTrail;
 import com.gl.ceir.config.model.constants.Datatype;
@@ -67,6 +68,9 @@ public class AlertDbService {
     @Autowired
     AuditDBRepo auditDb;
 
+    @Autowired
+    private FeatureNameMap featureNameMap;
+    String requestType = "ALERT_MGMT";
 
     private GenericSpecificationBuilder<AlertDb> buildSpecification(AlertDbFilter filterRequest) {
         GenericSpecificationBuilder<AlertDb> uPSB = new GenericSpecificationBuilder<AlertDb>(propertiesReader.dialect);
@@ -169,7 +173,7 @@ public class AlertDbService {
                  * filterRequest.getPublicIp(),filterRequest.getBrowser());
                  */
 
-                auditDb.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUsername(), Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()), Features.Alert_Management, SubFeatures.VIEW_ALL, "", "NA", "SystemAdmin", filterRequest.getPublicIp(), filterRequest.getBrowser()));
+                auditDb.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUsername(), Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()), featureNameMap.get(requestType), featureNameMap.get("VIEWALL"), "", "NA", "SystemAdmin", filterRequest.getPublicIp(), filterRequest.getBrowser()));
 
             } else if (source.equalsIgnoreCase("filter")) {
                 /*
@@ -178,7 +182,7 @@ public class AlertDbService {
                  * Alert_Management,SubFeatures.FILTER,filterRequest.getFeatureId(),
                  * filterRequest.getPublicIp(),filterRequest.getBrowser());
                  */
-                auditDb.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUsername(), Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()), Features.Alert_Management, SubFeatures.FILTER, "", "NA", "SystemAdmin", filterRequest.getPublicIp(), filterRequest.getBrowser()));
+                auditDb.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUsername(), Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()), featureNameMap.get(requestType), featureNameMap.get("FILTER"), "", "NA", "SystemAdmin", filterRequest.getPublicIp(), filterRequest.getBrowser()));
             } else if (source.equalsIgnoreCase("ViewExport")) {
                 log.info("for " + source + " no entries in Audit Trail");
             }
@@ -227,9 +231,9 @@ public class AlertDbService {
             alertAbFilter.setSort("");
             List<AlertDb> list = viewAllAlertData(alertAbFilter, pageNo, pageSize, source).getContent();
             if (list.size() > 0) {
-                fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_AlertDb.csv";
+                fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_" + featureNameMap.get(requestType).replace(" ", "_") + ".csv";
             } else {
-                fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_AlertDb.csv";
+                fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_" + featureNameMap.get(requestType).replace(" ", "_") + ".csv";
             }
             log.info(" file path plus file name: " + Paths.get(filePath + fileName));
             writer = Files.newBufferedWriter(Paths.get(filePath + fileName));
@@ -245,7 +249,7 @@ public class AlertDbService {
              * alertAbFilter.getPublicIp(),alertAbFilter.getBrowser());
              */
 
-            auditDb.save(new AuditTrail(alertAbFilter.getUserId(), alertAbFilter.getUsername(), Long.valueOf(alertAbFilter.getUserTypeId()), alertAbFilter.getUserType(), Long.valueOf(alertAbFilter.getFeatureId()), Features.Alert_Management, SubFeatures.EXPORT, "", "NA", "SystemAdmin", alertAbFilter.getPublicIp(), alertAbFilter.getBrowser()));
+            auditDb.save(new AuditTrail(alertAbFilter.getUserId(), alertAbFilter.getUsername(), Long.valueOf(alertAbFilter.getUserTypeId()), alertAbFilter.getUserType(), Long.valueOf(alertAbFilter.getFeatureId()), featureNameMap.get(requestType), featureNameMap.get("EXPORT"), "", "NA", "SystemAdmin", alertAbFilter.getPublicIp(), alertAbFilter.getBrowser()));
             if (list.size() > 0) {
                 //List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag("GRIEVANCE_CATEGORY");
                 fileRecords = new ArrayList<AlertDbFile>();
@@ -309,7 +313,7 @@ public class AlertDbService {
              * request.getPublicIp(),request.getBrowser());
              */
 
-            auditDb.save(new AuditTrail(request.getUserId(), request.getUsername(), Long.valueOf(request.getUserTypeId()), request.getUserType(), Long.valueOf(request.getFeatureId()), Features.Alert_Management, SubFeatures.VIEW, "", "NA", "SystemAdmin", request.getPublicIp(), request.getBrowser()));
+            auditDb.save(new AuditTrail(request.getUserId(), request.getUsername(), Long.valueOf(request.getUserTypeId()), request.getUserType(), Long.valueOf(request.getFeatureId()), featureNameMap.get(requestType), featureNameMap.get("VIEW"), "", "NA", "SystemAdmin", request.getPublicIp(), request.getBrowser()));
             if (alertDb != null) {
                 GenricResponse response = new GenricResponse(200, "", "", alertDb);
                 return new ResponseEntity<>(response, HttpStatus.OK);
@@ -349,7 +353,7 @@ public class AlertDbService {
 
             auditDb.save(new AuditTrail(alertDb.getUserId(), alertDb.getUsername(),
                     Long.valueOf(alertDb.getUserTypeId()), alertDb.getUserType(),
-                    Long.valueOf(alertDb.getFeatureId()), Features.Alert_Management, SubFeatures.UPDATE, "", "NA",
+                    Long.valueOf(alertDb.getFeatureId()), featureNameMap.get(requestType), featureNameMap.get("UPDATE"), "", "NA",
                     "SystemAdmin", alertDb.getPublicIp(), alertDb.getBrowser()));
 
             if (output != null) {

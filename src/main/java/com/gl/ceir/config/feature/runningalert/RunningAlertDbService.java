@@ -2,6 +2,7 @@ package com.gl.ceir.config.feature.runningalert;
 
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.externalproperties.FeatureNameMap;
 import com.gl.ceir.config.feature.alert.Features;
 import com.gl.ceir.config.feature.alert.SubFeatures;
 import com.gl.ceir.config.feature.alert.SystemConfigDbRepoService;
@@ -68,6 +69,9 @@ public class RunningAlertDbService {
 
     @Autowired
     AuditDBRepo auditDb;
+    @Autowired
+     FeatureNameMap featureNameMap;
+    private String requestType = "RUNNING_ALERT_MGMT";
 
     private GenericSpecificationBuilder<RunningAlertDb> buildSpecification(RunningAlertFilter filterRequest) {
 
@@ -82,7 +86,7 @@ public class RunningAlertDbService {
         if (Objects.nonNull(filterRequest.getAlertId()) && filterRequest.getAlertId() != "")
             rASB.with(new SearchCriteria("alertId", filterRequest.getAlertId(), SearchOperation.EQUALITY, Datatype.STRING));
 
-        if (Objects.nonNull(filterRequest.getFeatureName()) && filterRequest.getFeatureName() != "" && !filterRequest.getFeatureName().equals("-1") )
+        if (Objects.nonNull(filterRequest.getFeatureName()) && filterRequest.getFeatureName() != "" && !filterRequest.getFeatureName().equals("-1"))
             rASB.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
 
 
@@ -148,7 +152,7 @@ public class RunningAlertDbService {
                  * filterRequest.getPublicIp(),filterRequest.getBrowser());
                  */
 
-                auditDb.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUsername(), Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()), Features.Running_Alert_Management, SubFeatures.VIEW_ALL, "", "NA", "SystemAdmin", filterRequest.getPublicIp(), filterRequest.getBrowser()));
+                auditDb.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUsername(), Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()), featureNameMap.get(requestType), featureNameMap.get("VIEWALL"), "", "NA", "SystemAdmin", filterRequest.getPublicIp(), filterRequest.getBrowser()));
             } else if (source.equalsIgnoreCase("filter")) {
                 /*
                  * userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername
@@ -157,7 +161,7 @@ public class RunningAlertDbService {
                  * filterRequest.getPublicIp(),filterRequest.getBrowser());
                  */
 
-                auditDb.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUsername(), Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()), Features.Running_Alert_Management, SubFeatures.FILTER, "", "NA", "SystemAdmin", filterRequest.getPublicIp(), filterRequest.getBrowser()));
+                auditDb.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUsername(), Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()), featureNameMap.get(requestType), featureNameMap.get("FILTER"), "", "NA", "SystemAdmin", filterRequest.getPublicIp(), filterRequest.getBrowser()));
             } else if (source.equalsIgnoreCase("ViewExport")) {
                 log.info("for " + source + " no entries in Audit Trail");
             }
@@ -204,9 +208,10 @@ public class RunningAlertDbService {
             mapStrategy.setType(RunningAlertFile.class);
             List<RunningAlertDb> list = viewRunningAlertData(runAlertFilter, pageNo, pageSize, "Export", source).getContent();
             if (list.size() > 0) {
-                fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_RunningAlert.csv";
+                fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_" + featureNameMap.get(requestType).replace(" ", "_") + ".csv";
             } else {
-                fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_RunningAlert.csv";
+                fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_" + featureNameMap.get(requestType).replace(" ", "_") + ".csv";
+                ;
             }
             log.info(" file path plus file name: " + Paths.get(filePath + fileName));
             writer = Files.newBufferedWriter(Paths.get(filePath + fileName));
@@ -223,7 +228,7 @@ public class RunningAlertDbService {
              * runAlertFilter.getPublicIp(),runAlertFilter.getBrowser());
              */
 
-            auditDb.save(new AuditTrail(runAlertFilter.getUserId(), runAlertFilter.getUsername(), Long.valueOf(runAlertFilter.getUserTypeId()), runAlertFilter.getUserType(), Long.valueOf(runAlertFilter.getFeatureId()), Features.Running_Alert_Management, SubFeatures.EXPORT, "", "NA", "SystemAdmin", runAlertFilter.getPublicIp(), runAlertFilter.getBrowser()));
+            auditDb.save(new AuditTrail(runAlertFilter.getUserId(), runAlertFilter.getUsername(), Long.valueOf(runAlertFilter.getUserTypeId()), runAlertFilter.getUserType(), Long.valueOf(runAlertFilter.getFeatureId()), featureNameMap.get(requestType), featureNameMap.get("EXPORT"), "", "NA", "SystemAdmin", runAlertFilter.getPublicIp(), runAlertFilter.getBrowser()));
             if (list.size() > 0) {
                 //List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag("GRIEVANCE_CATEGORY");
                 fileRecords = new ArrayList<RunningAlertFile>();

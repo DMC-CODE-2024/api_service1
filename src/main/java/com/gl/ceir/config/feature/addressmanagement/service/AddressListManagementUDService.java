@@ -3,6 +3,7 @@ package com.gl.ceir.config.feature.addressmanagement.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.gl.ceir.config.externalproperties.FeatureNameMap;
 import com.gl.ceir.config.feature.addressmanagement.FeaturesEnum;
 import com.gl.ceir.config.feature.addressmanagement.audit_trail.AuditTrailService;
 import com.gl.ceir.config.feature.common.LocalDateTimeDeserializer;
@@ -19,6 +20,7 @@ import com.gl.ceir.config.repository.app.ProvinceRepository;
 import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -43,9 +45,12 @@ public class AddressListManagementUDService {
         this.districtRepository = districtRepository;
     }
 
+    @Autowired
+    private FeatureNameMap featureNameMap;
+
     @Transactional
     public GenricResponse delete(AddressEntity addressEntity) {
-        String requestType = "ADDRESS_MGMT_DELETE";
+        String requestType = "ADDRESS_MGMT";
         boolean isIdExist = addressListMgmtRepository.existsById(addressEntity.getId());
         logger.info("isIdExist" + isIdExist);
         if (isIdExist) {
@@ -64,7 +69,7 @@ public class AddressListManagementUDService {
             }
             addressListMgmtRepository.deleteById(addressEntity.getId());
 
-            auditTrailService.auditTrailOperation(addressEntity.getAuditTrailModel(), FeaturesEnum.getFeatureName(requestType), FeaturesEnum.getSubFeatureName(requestType));
+            auditTrailService.auditTrailOperation(addressEntity.getAuditTrailModel(), featureNameMap.get(requestType), featureNameMap.get("DELETE"));
 
             return new GenricResponse("Record deleted", 1);
         }
@@ -194,9 +199,9 @@ public class AddressListManagementUDService {
             logger.info("payload to save {}", result);
             updateAddressListMgmt(result);
 
-            String requestType = "ADDRESS_MGMT_UPDATE";
+            String requestType = "ADDRESS_MGMT";
             logger.info("requestType [" + requestType + "]");
-            auditTrailService.auditTrailOperation(addressEntity.getAuditTrailModel(), FeaturesEnum.getFeatureName(requestType), FeaturesEnum.getSubFeatureName(requestType));
+            auditTrailService.auditTrailOperation(addressEntity.getAuditTrailModel(), featureNameMap.get(requestType), featureNameMap.get("UPDATE"));
 
 
             return new GenricResponse("Record successfully updated", 1);
