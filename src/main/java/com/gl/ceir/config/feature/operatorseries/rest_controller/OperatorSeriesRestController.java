@@ -2,6 +2,8 @@ package com.gl.ceir.config.feature.operatorseries.rest_controller;
 
 import com.gl.ceir.config.feature.operatorseries.model.GenricResponse;
 import com.gl.ceir.config.feature.operatorseries.service.OperatorSeriesService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,10 @@ public class OperatorSeriesRestController {
         this.operatorSeriesService = operatorSeriesService;
     }
 
+    @Tag(name = "Operator Series", description = "System Configuration Module API")
+    @Operation(
+            summary = "MSISDN series validation",
+            description = "Validate MSISDN series length based on MSISDN")
     @GetMapping("/{msisdn}")
     public GenricResponse operatorSeriesLengthValidation(@PathVariable String msisdn) {
         if (msisdn.charAt(0) == '0') {
