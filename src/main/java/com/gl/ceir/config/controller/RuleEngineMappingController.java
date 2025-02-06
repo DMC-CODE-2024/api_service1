@@ -5,6 +5,8 @@ import com.gl.ceir.config.repository.app.UsertypeRepo;
 import com.gl.ceir.config.repository.aud.AuditTrailRepository;
 import com.gl.ceir.config.service.impl.RuleEngineMappingServiceImpl;
 import com.gl.ceir.config.service.impl.SystemConfigListServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,10 @@ public class RuleEngineMappingController {
     @Autowired
     SystemConfigListServiceImpl systemConfigListServiceImpl;
 
-   // //@ApiOperation(value = "pagination View filtered rule-engine-mapping", response = RuleEngine.class)
+   @Tag(name = "Rule Engine Mapping", description = "System Configuration Module API")
+   @Operation(
+           summary = "Fetch and export all record",
+           description = "fetch all entities from a data source and export the records into a CSV file.")
     @PostMapping("/filter/rule-engine-mapping")
     public MappingJacksonValue getFilteredData(@RequestBody FilterRequest filterRequest,
                                                @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
@@ -60,7 +65,11 @@ public class RuleEngineMappingController {
         return mapping;
     }
 
-   // //@ApiOperation(value = "View By Id || rule-engine-mapping", response = MappingJacksonValue.class)
+
+    @Tag(name = "Rule Engine Mapping", description = "System Configuration Module API")
+   @Operation(
+           summary = "Fetch single record based on Id",
+           description = "Fetches record based on Id from data source")
     @GetMapping("/rule-engine-mapping/{id}")
     public MappingJacksonValue findAuditTrailById(@PathVariable long id) {
 
@@ -75,7 +84,10 @@ public class RuleEngineMappingController {
         return mapping;
     }
 
-   // //@ApiOperation(value = "Save || rule-engine-mapping", response = MappingJacksonValue.class)
+    @Tag(name = "Rule Engine Mapping", description = "System Configuration Module API")
+    @Operation(
+            summary = "Add record to the data source",
+            description = "Add the record based on the received request")
     @PostMapping("/rule-engine-mapping")
     public GenricResponse save(@RequestBody RuleEngineMapping ruleEngineMapping) {
 
@@ -94,7 +106,10 @@ public class RuleEngineMappingController {
 
     }
 
-   // //@ApiOperation(value = "Update By Id || rule-engine-mapping", response = MappingJacksonValue.class)
+    @Tag(name = "Rule Engine Mapping", description = "System Configuration Module API")
+    @Operation(
+            summary = "Update record to the data source",
+            description = "Update the record based on the received request")
     @PutMapping("/rule-engine-mapping")
     public GenricResponse updateById(@RequestBody RuleEngineMapping ruleEngineMapping) {
 
@@ -110,7 +125,10 @@ public class RuleEngineMappingController {
         return genricResponse;
     }
 
-   // //@ApiOperation(value = "Delete By Id || rule-engine-mapping", response = MappingJacksonValue.class)
+    @Tag(name = "Rule Engine Mapping", description = "System Configuration Module API")
+    @Operation(
+            summary = "Delete record from the data source",
+            description = "Delete the record based on the received request")
     @DeleteMapping("/rule-engine-mapping")
     public GenricResponse deleteById(@RequestBody RuleEngineMapping ruleEngineMapping) {
 
@@ -126,25 +144,10 @@ public class RuleEngineMappingController {
         return genricResponse;
     }
 
-    /*
-     * //@ApiOperation(value = "user type list", response = MappingJacksonValue.class)
-     *
-     * @DeleteMapping("/rule-engine-mapping-userType") public @ResponseBody
-     * List<FeatureMappingDb>
-     * getUserTypeByFeatureID(@RequestParam(name="featureName") String featureName)
-     * {
-     *
-     * logger.info("featureName for get userType API   [" + featureName + "]");
-     *
-     * List<FeatureMappingDb> genricResponse =
-     * usertypeRepo.findDistinctByFeature(featureName);
-     * logger.info("Response to send = " + genricResponse);
-     *
-     * return genricResponse; }
-     */
-
-
-   // //@ApiOperation(value = "user type list", response = MappingJacksonValue.class)
+    @Tag(name = "Rule Engine Mapping", description = "System Configuration Module API")
+   @Operation(
+           summary = "Fetch all user type list",
+           description = "Fetch all user type list based on the received request")
     @PostMapping("/rule-engine-mapping-userType")
     public @ResponseBody List<RuleEngineMapping> getUserTypeByFeatureID(@RequestParam(name = "featureName") String featureName, @RequestParam(name = "name") String name) {
 
@@ -156,7 +159,10 @@ public class RuleEngineMappingController {
         return genricResponse;
     }
 
-   // //@ApiOperation(value = "  Get Feature by RuleName", response = RuleEngineMapping.class)
+    @Tag(name = "Rule Engine Mapping", description = "System Configuration Module API")
+    @Operation(
+            summary = "Fetch all feature list based on rule name",
+            description = "Fetch all feature list based on the received request")
     @PostMapping(path = "GetfeaturebyRuleName")
     public List<RuleEngineMapping> getfeaturebyRuleName(@RequestParam(name = "ruleName", required = false) String ruleName) {
         logger.info("ruleName for get Feature   [" + ruleName + "]");
@@ -175,6 +181,10 @@ public class RuleEngineMappingController {
     }
 
    // //@ApiOperation(value = "Action in Grace/Post Grace Period", response = MappingJacksonValue.class)
+   @Tag(name = "Rule Engine Mapping", description = "System Configuration Module API")
+   @Operation(
+           summary = "Fetch all action list based tag",
+           description = "Fetch all action list based on the received request")
     @PostMapping("/gracePostgraceActionMapping")
     public @ResponseBody List<SystemConfigListDb> getGracePostgraceActionMapping(@RequestParam(name = "tag") String tag) {
 

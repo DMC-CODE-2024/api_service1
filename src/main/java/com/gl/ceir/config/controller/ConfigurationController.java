@@ -9,6 +9,8 @@ import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.repository.aud.AuditTrailRepository;
 import com.gl.ceir.config.service.impl.ConfigurationManagementServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +39,10 @@ public class ConfigurationController {
     private FeatureNameMap featureNameMap;
     String requestType = "SYSTEM_MGMT";
 
-    /// /@ApiOperation(value = "System Config view All Data", response = SystemConfigurationDb.class)
+    @Tag(name = "System Management", description = "System Configuration Module API")
+    @Operation(
+            summary = "Get system all details",
+            description = "Request to get system all details")
     @PostMapping("/system/viewAll")
     public MappingJacksonValue findSystemDetails() {
 
@@ -52,7 +57,10 @@ public class ConfigurationController {
         return mapping;
     }
 
-    //@ApiOperation(value = "Paginated view of System Config.", response = SystemConfigurationDb.class)
+    @Tag(name = "System Management", description = "System Configuration Module API")
+    @Operation(
+            summary = "Fetch all record",
+            description = "Fetches all address entities and their data from data source")
     @PostMapping("/filter/system-configuration")
     public MappingJacksonValue paginatedViewOfSystemConfig(@RequestBody FilterRequest filterRequest,
                                                            @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
@@ -72,7 +80,10 @@ public class ConfigurationController {
         return mapping;
     }
 
-    //@ApiOperation(value = "System Config view Data using Tag", response = SystemConfigurationDb.class)
+    @Tag(name = "System Management", description = "System Configuration Module API")
+    @Operation(
+            summary = "Fetch single record based on Tag",
+            description = "Fetches record based on Tag from data source")
     @RequestMapping(path = "/system/viewTag", method = RequestMethod.POST)
     public MappingJacksonValue findSystemDetailsByTag(@RequestBody SystemConfigurationDb systemConfigurationDb) {
 
@@ -92,7 +103,10 @@ public class ConfigurationController {
         return mapping;
     }
 
-    //@ApiOperation(value = "System Config update Data using id", response = GenricResponse.class)
+    @Tag(name = "System Management", description = "System Configuration Module API")
+    @Operation(
+            summary = "Update record to the data source",
+            description = "Update the record based on the received request")
     @RequestMapping(path = "/system/update", method = RequestMethod.PUT)
     public GenricResponse updateSytem(@RequestBody SystemConfigurationDb systemConfigurationDb) {
 
@@ -200,6 +214,7 @@ public class ConfigurationController {
 
 
     //@ApiOperation(value = "System Config List DB - view All Data", response = SystemConfigListDb.class)
+
     @GetMapping("/system-config-list/{tag}")
     public MappingJacksonValue findSystemConfigListByTag(@PathVariable("tag") String tag) {
 

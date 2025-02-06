@@ -3,6 +3,8 @@ package com.gl.ceir.config.controller;
 import java.util.List;
 
 import com.gl.ceir.config.externalproperties.FeatureNameMap;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,10 @@ public class RuleEngineController {
     FeatureNameMap featureNameMap;
 
 
-    //@ApiOperation(value = "pagination View filtered audit-trail", response = RuleEngine.class)
+    @Tag(name = "Rule List", description = "System Configuration Module API")
+    @Operation(
+            summary = "Fetch and export all record",
+            description = "fetch all entities from a data source and export the records into a CSV file.")
     @PostMapping("/filter/rule-engine")
     public MappingJacksonValue getFilteredData(@RequestBody FilterRequest filterRequest,
                                                @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
@@ -67,7 +72,10 @@ public class RuleEngineController {
         return mapping;
     }
 
-    //@ApiOperation(value = "View By Id || Audit Trail", response = MappingJacksonValue.class)
+    @Tag(name = "Rule List", description = "System Configuration Module API")
+    @Operation(
+            summary = "Fetch single record based on Id",
+            description = "Fetches record based on Id from data source")
     @GetMapping("/rule-engine/{id}")
     public MappingJacksonValue findAuditTrailById(@PathVariable long id) {
 
@@ -82,7 +90,10 @@ public class RuleEngineController {
         return mapping;
     }
 
-    //@ApiOperation(value = "All rule name", response = RuleEngine.class)
+    @Tag(name = "Rule List", description = "System Configuration Module API")
+    @Operation(
+            summary = "Fetch all rule list",
+            description = "Fetches all rule list from data source")
     @GetMapping("/all/rule-engine")
     public MappingJacksonValue getFilteredData() {
 
@@ -97,7 +108,10 @@ public class RuleEngineController {
         return mapping;
     }
 
-    //@ApiOperation(value = "Update By Id || Rule Engine", response = MappingJacksonValue.class)
+    @Tag(name = "Rule List", description = "System Configuration Module API")
+    @Operation(
+            summary = "Update record to the data source",
+            description = "Update the record based on the received request")
     @PutMapping("/rule-engine")
     public MappingJacksonValue updateAuditTrailById(@RequestBody RuleEngine ruleEngine) {
         String requestType = featureNameMap.get("RULE");

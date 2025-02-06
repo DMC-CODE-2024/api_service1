@@ -6,6 +6,8 @@ import com.gl.ceir.config.model.app.RunningAlertDb;
 import com.gl.ceir.config.model.app.SystemConfigListDb;
 import com.gl.ceir.config.repository.app.RunningAlertDbRepo;
 import com.gl.ceir.config.repository.app.SystemConfigDbListRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -30,7 +32,10 @@ public class RunningAlertController {
     @Autowired
     RunningAlertDbRepo runningAlertDbRepo;
 
-    //@ApiOperation(value = "running alert db  data.", response = RunningAlertDb.class)
+    @Tag(name = "Running Alert Management", description = "System Configuration Module API")
+    @Operation(
+            summary = "Fetch and export all record",
+            description = "fetch all entities from a data source and export the records into a CSV file.")
     @PostMapping("/viewAll")
     public MappingJacksonValue viewRecord(@RequestBody RunningAlertFilter filterRequest, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo, @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize, @RequestParam(value = "file", defaultValue = "0") Integer file, @RequestParam(value = "source", defaultValue = "menu") String source) {
         MappingJacksonValue mapping = null;
@@ -57,7 +62,10 @@ public class RunningAlertController {
     }
 
 
-    //@ApiOperation(value="update alert db")
+    @Tag(name = "Running Alert Management", description = "System Configuration Module API")
+    @Operation(
+            summary = "Fetch distinct value from the data source",
+            description = "Fetch distinct values of alert feature based on the received request")
     @GetMapping("/alertFeatures")
     public ResponseEntity<?> alertFeatures() {
         List<String> list = runningAlertDbRepo.findDistinctFeatureName();

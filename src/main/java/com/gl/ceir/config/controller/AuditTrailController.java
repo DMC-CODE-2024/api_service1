@@ -3,6 +3,8 @@ package com.gl.ceir.config.controller;
 import java.util.List;
 import java.util.Optional;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,10 @@ public class AuditTrailController {
 	@Autowired
 	AuditTrailRepository auditTrail;
 
-	//@ApiOperation(value = "pagination View filtered audit-trail", response = AuditTrailController.class)
+	@Tag(name = "Audit Trail Management", description = "System Configuration Module API")
+	@Operation(
+			summary = "Fetch all record",
+			description = "Fetches all address entities and their data from data source")
 	@PostMapping("/filter/audit-trail")
 	public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
@@ -59,7 +64,11 @@ public class AuditTrailController {
 		return mapping;
 	}
 
-	//@ApiOperation(value = "View By Id || Audit Trail", response = SystemConfigurationDb.class)
+
+	@Tag(name = "Audit Trail Management", description = "System Configuration Module API")
+	@Operation(
+			summary = "Fetch single record based on Id",
+			description = "Fetches record based on Id from data source")
 	@GetMapping("/audit-trail/{id}")
 	public MappingJacksonValue findAuditTrailById(@PathVariable long id) {
 
@@ -74,15 +83,21 @@ public class AuditTrailController {
 		return mapping;
 	}
 
-
-	//@ApiOperation(value = "getDistinctAuditFeatureName")
+	@Tag(name = "Audit Trail Management", description = "System Configuration Module API")
+	@Operation(
+			summary = "Fetch distinct value from the data source",
+			description = "Fetch distinct values of features based on the received request")
 	@GetMapping("/getDistinctAuditFeatureName")
 	public ResponseEntity<?> getDistinctAuditFeatureName() {
 		Optional<List<String>> list = Optional.ofNullable(auditTrail.findDistinctFeatureName());
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
-    //@ApiOperation(value = "getDistinctAuditFeatureName")
+
+	@Tag(name = "Audit Trail Management", description = "System Configuration Module API")
+	@Operation(
+			summary = "Fetch distinct value from the data source",
+			description = "Fetch distinct values of usertype based on the received request")
     @PostMapping("/userRegistration/getUsertypes")
     public ResponseEntity<?> getUsertype() {
         Optional<List<String>> list = Optional.ofNullable(auditTrail.findDistinctUserType());
